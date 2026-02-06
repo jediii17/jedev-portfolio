@@ -1,6 +1,10 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
 
+import.meta.glob([
+    './assets/images/**',
+]);
+
 window.Alpine = Alpine;
 
 Alpine.store('theme', {

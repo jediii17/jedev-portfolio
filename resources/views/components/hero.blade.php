@@ -2,9 +2,24 @@
     <div class="space-y-8">
         <!-- Profile Image -->
         <div class="flex items-center gap-6">
-            <div class="relative w-32 h-32 md:w-40 md:h-40">
-                <img src="{{ asset('images/jed.png') }}" alt="Jedidia Lemuel B. Cruz" class=" rounded-m object-cover shadow-xl border-4 border-surface w-full h-full">
-                <div class="absolute inset-0 rounded-full bg-accent mix-blend-overlay opacity-10"></div>
+            <div class="relative w-32 h-32 md:w-40 md:h-40 cursor-pointer group"
+                x-data="{ hovered: false }"
+                @mouseenter="hovered = true"
+                @mouseleave="hovered = false"
+                @click="hovered = !hovered">
+                <!-- Default Profile Image -->
+                <img src="{{ Vite::asset('resources/js/assets/images/profile.png') }}"
+                    alt="Jedidia Lemuel B. Cruz"
+                    class="absolute inset-0 rounded-md object-cover shadow-md border-4 border-surface w-full h-full transition-opacity duration-300"
+                    :class="hovered ? 'opacity-0' : 'opacity-100'">
+
+                <!-- Hover/Click Image (jed.png) -->
+                <img src="{{ Vite::asset('resources/js/assets/images/jed.png') }}"
+                    alt="Jedidia Lemuel B. Cruz"
+                    class="absolute inset-0 rounded-md object-cover shadow-md border-4 border-surface w-full h-full transition-opacity duration-300"
+                    :class="hovered ? 'opacity-100' : 'opacity-0'">
+
+                <div class="absolute inset-0 rounded-full bg-accent mix-blend-overlay opacity-10 pointer-events-none"></div>
             </div>
 
             <div>

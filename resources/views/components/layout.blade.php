@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+
     <title>{{ $title ?? 'Jedidia Lemuel B. Cruz | Software Engineer' }}</title>
     <meta name="description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
 
@@ -14,14 +17,14 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="{{ $title ?? 'Jedidia Lemuel B. Cruz | Software Engineer' }}">
     <meta property="og:description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
-    <meta property="og:image" content="{{ asset('images/jed.png') }}">
+    <meta property="og:image" content="{{ asset('images/profile.png') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta property="twitter:title" content="{{ $title ?? 'Jedidia Lemuel B. Cruz | Software Engineer' }}">
     <meta property="twitter:description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
-    <meta property="twitter:image" content="{{ asset('images/jed.png') }}">
+    <meta property="twitter:image" content="{{ asset('images/profile.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
