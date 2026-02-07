@@ -277,7 +277,7 @@
                     console.error('Chat error:', error);
                     this.messages.push({
                         role: 'assistant',
-                        content: 'Jed is busy right now. Please try again later.'
+                        content: 'I am likely playing guitar right now!🎶 Try again in a bit'
                     });
                 } finally {
                     this.isLoading = false;
