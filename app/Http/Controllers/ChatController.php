@@ -46,8 +46,8 @@ class ChatController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'I am likely playing guitar right now! 🎸 Try again in a bit',
-                'error' => config('app.debug') ? $e->getMessage() : null,
+                'message' => 'Error: ' . $e->getMessage(), // directly show error for debugging
+                'error' => $e->getMessage(),
                 'chat_id' => $chatLog->id ?? null,
             ], 500);
         }

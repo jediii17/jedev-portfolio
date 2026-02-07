@@ -251,7 +251,8 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error('I am likely playing guitar right now! 🙈 Try again in a bit');
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || errorData.error || `Server error: ${response.status}`);
                     }
 
                     const data = await response.json();
@@ -270,14 +271,14 @@
                     } else {
                         this.messages.push({
                             role: 'assistant',
-                            content: data.message || 'Sorry, something went wrong. Please try again.'
+                            content: data.message
                         });
                     }
                 } catch (error) {
                     console.error('Chat error:', error);
                     this.messages.push({
                         role: 'assistant',
-                        content: 'I am likely playing guitar right now!🎶 Try again in a bit'
+                        content: error.message
                     });
                 } finally {
                     this.isLoading = false;
