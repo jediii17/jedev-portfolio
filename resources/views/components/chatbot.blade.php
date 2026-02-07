@@ -250,6 +250,10 @@
                         }),
                     });
 
+                    if (!response.ok) {
+                        throw new Error('I am likely playing guitar right now! 🙈 Try again in a bit');
+                    }
+
                     const data = await response.json();
 
                     if (data.success) {
@@ -273,7 +277,7 @@
                     console.error('Chat error:', error);
                     this.messages.push({
                         role: 'assistant',
-                        content: 'Sorry, I couldn\'t connect to the server. Please try again later.'
+                        content: 'Jed is busy right now. Please try again later.'
                     });
                 } finally {
                     this.isLoading = false;

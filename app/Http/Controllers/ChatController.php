@@ -20,8 +20,8 @@ class ChatController extends Controller
         ]);
 
         try {
-            $response = (new PortfolioChatbot())
-                ->prompt($request->message);
+            $chatbot = new PortfolioChatbot();
+            $response = $chatbot->prompt($request->message);
 
             // Log the conversation to the database
             $chatLog = ChatLog::create([
@@ -46,9 +46,9 @@ class ChatController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'I am likely playing guitar right now! 🎸 Try again in a bit.',
+                'message' => 'I am likely playing guitar right now! 🎸 Try again in a bit',
                 'error' => config('app.debug') ? $e->getMessage() : null,
-                'chat_id' => $chatLog->id,
+                'chat_id' => $chatLog->id ?? null,
             ], 500);
         }
     }
