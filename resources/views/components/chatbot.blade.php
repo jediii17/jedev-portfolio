@@ -278,7 +278,7 @@
                     console.error('Chat error:', error);
                     this.messages.push({
                         role: 'assistant',
-                        content: error.message
+                        content: error.message || "I’m likely playing guitar right now!🎶 Try again later. [0102]" //error: 0102
                     });
                 } finally {
                     this.isLoading = false;
