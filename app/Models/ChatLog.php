@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ChatLog extends Model
+{
+    /** @use HasFactory<\Database\Factories\ChatLogFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'user_message',
+        'ai_response',
+        'ip_address',
+        'admin_reply',
+        'is_replied',
+    ];
+}

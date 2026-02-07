@@ -53,6 +53,7 @@
         <x-footer />
     </div>
 
+    <x-chatbot />
     <x-custom-cursor />
     @stack('scripts')
 </body>
