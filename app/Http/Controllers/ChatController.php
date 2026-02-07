@@ -35,8 +35,8 @@ class ChatController extends Controller
                 'message' => (string) $response,
                 'chat_id' => $chatLog->id,
             ]);
-        } catch (\Exception $e) {
-            Log::error('Chatbot error: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('Chatbot error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
 
             // Log failed attempt if needed, or at least the user message
             $chatLog = ChatLog::create([
