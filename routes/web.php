@@ -11,4 +11,4 @@ Route::get('/certifications', [PortfolioController::class, 'certifications'])->n
 
 // Chatbot API
 Route::post('/api/chat', [ChatController::class, 'chat'])->name('chat.send')->middleware('throttle:60,1');
-Route::get('/api/chat/reply', [ChatController::class, 'getAdminReply'])->name('chat.reply')->middleware('throttle:120,1');
+Route::get('/api/chat/reply', [ChatController::class, 'getAdminReply'])->name('chat.reply')->middleware('throttle:60,1');
