@@ -24,6 +24,20 @@
     {{-- Gradient Overlay --}}
     <div class="parallax-overlay overlay-gradient-dark"></div>
 
+    {{-- Floating hero particles --}}
+    <div class="hero-particles" aria-hidden="true">
+        <span class="hero-particle hero-particle-1" data-parallax="-0.12">{ }</span>
+        <span class="hero-particle hero-particle-2" data-parallax="0.08">
+            <>
+        </span>
+        <span class="hero-particle hero-particle-3" data-parallax="-0.18">//</span>
+        <span class="hero-particle hero-particle-4" data-parallax="0.14">01</span>
+        <span class="hero-particle hero-particle-5" data-parallax="-0.06">( )</span>
+        <span class="hero-particle hero-particle-6" data-parallax="0.1">::</span>
+        <span class="hero-particle hero-particle-7" data-parallax="-0.15">&&</span>
+        <span class="hero-particle hero-particle-8" data-parallax="0.05">=></span>
+    </div>
+
     {{-- Hero Content --}}
     <div class="hero-content pl-2 pr-4 md:pl-2 md:pr-2 lg:pl-2 lg:pr-2">
         <div class="flex flex-col gap-6 md:gap-10 w-full">
@@ -84,8 +98,7 @@
             {{-- Description --}}
             <div class="max-w-2xl hero-subtitle">
                 <p class="text-body-lg text-white/60 leading-relaxed">
-                    Developing web applications with <span class="text-accent font-semibold">Laravel</span> and <span class="text-accent font-semibold">Vue.js</span>.
-                    Passionate about clean architecture, AI integration, and building products that make a difference.
+                    Developing web applications, passionate about clean architecture, AI integration, and building products that make a difference.
                 </p>
             </div>
 
@@ -181,6 +194,106 @@
 </section>
 
 <style>
+    /* Hero floating particles */
+    .hero-particles {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 3;
+    }
+
+    .hero-particle {
+        position: absolute;
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        font-weight: 700;
+        color: rgba(59, 130, 246, 0.12);
+        font-size: clamp(1rem, 3vw, 2.5rem);
+        will-change: transform;
+    }
+
+    .hero-particle-1 {
+        top: 12%;
+        left: 8%;
+        animation: hero-drift-a 9s ease-in-out infinite;
+    }
+
+    .hero-particle-2 {
+        top: 22%;
+        right: 12%;
+        animation: hero-drift-b 11s ease-in-out infinite 1s;
+    }
+
+    .hero-particle-3 {
+        bottom: 35%;
+        left: 5%;
+        animation: hero-drift-a 13s ease-in-out infinite 2s;
+    }
+
+    .hero-particle-4 {
+        top: 55%;
+        right: 6%;
+        animation: hero-drift-b 10s ease-in-out infinite 0.5s;
+    }
+
+    .hero-particle-5 {
+        bottom: 18%;
+        left: 55%;
+        animation: hero-drift-a 8s ease-in-out infinite 3s;
+    }
+
+    .hero-particle-6 {
+        top: 35%;
+        left: 40%;
+        animation: hero-drift-b 12s ease-in-out infinite 1.5s;
+    }
+
+    .hero-particle-7 {
+        bottom: 25%;
+        right: 20%;
+        animation: hero-drift-a 10s ease-in-out infinite 2.5s;
+    }
+
+    .hero-particle-8 {
+        top: 8%;
+        left: 65%;
+        animation: hero-drift-b 14s ease-in-out infinite 4s;
+    }
+
+    @keyframes hero-drift-a {
+
+        0%,
+        100% {
+            transform: translateY(0) rotate(0deg) scale(1);
+        }
+
+        33% {
+            transform: translateY(-15px) rotate(5deg) scale(1.05);
+        }
+
+        66% {
+            transform: translateY(10px) rotate(-3deg) scale(0.95);
+        }
+    }
+
+    @keyframes hero-drift-b {
+
+        0%,
+        100% {
+            transform: translateY(0) rotate(0deg) scale(1);
+        }
+
+        50% {
+            transform: translateY(18px) rotate(-8deg) scale(1.08);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-particle {
+            display: none;
+        }
+    }
+
     /* Gradient Mesh */
     .gradient-mesh {
         position: absolute;

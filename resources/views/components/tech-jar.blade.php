@@ -12,8 +12,8 @@
                 </h2>
             </div>
 
-            {{-- Category Legend --}}
-            <div class="flex flex-wrap justify-center gap-3 mb-10">
+            {{-- Category Legend (Clickable) --}}
+            <div id="tech-jar-legend" class="flex flex-wrap justify-center gap-3 mb-10">
                 @php
                 $categoryColors = [
                 'Frontend' => '#3b82f6',
@@ -24,10 +24,14 @@
                 ];
                 @endphp
                 @foreach($categoryColors as $cat => $color)
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/40 backdrop-blur-sm border border-white/5">
-                    <span class="inline-block w-2.5 h-2.5 rounded-full" style="background-color: {{ $color }}; box-shadow: 0 0 8px {{ $color }}40;"></span>
-                    <span class="text-[10px] font-bold text-muted uppercase tracking-widest">{{ $cat }}</span>
-                </div>
+                <button
+                    type="button"
+                    data-category="{{ $cat }}"
+                    data-color="{{ $color }}"
+                    class="tech-legend-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface/40 backdrop-blur-sm border border-white/10 cursor-pointer select-none transition-all duration-300">
+                    <span class="tech-legend-dot inline-block w-2.5 h-2.5 rounded-full transition-all duration-300" style="background-color: {{ $color }}; box-shadow: 0 0 8px {{ $color }}40;"></span>
+                    <span class="text-[10px] font-bold text-muted uppercase tracking-widest transition-colors duration-300">{{ $cat }}</span>
+                </button>
                 @endforeach
             </div>
 

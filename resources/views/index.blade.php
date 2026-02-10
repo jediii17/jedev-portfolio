@@ -90,101 +90,134 @@
     <x-certifications-preview :certifications="$certification" />
 
     {{-- Experience Section --}}
-    <section id="experience" class="parallax-section" style="background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);">
+    <section id="experience" class="parallax-section career-section relative overflow-hidden">
+        {{-- Floating code decorations --}}
+        <div class="career-floating-decor" aria-hidden="true">
+            <span class="career-float-symbol career-float-1" data-parallax="-0.15">&lt;/&gt;</span>
+            <span class="career-float-symbol career-float-2" data-parallax="0.1">{ }</span>
+            <span class="career-float-symbol career-float-3" data-parallax="-0.08">( )</span>
+            <span class="career-float-symbol career-float-4" data-parallax="0.12">/**</span>
+            <span class="career-float-symbol career-float-5" data-parallax="-0.2">==</span>
+            <span class="career-float-symbol career-float-6" data-parallax="0.06">=&gt;</span>
+        </div>
+
         <div class="parallax-section-content">
             <div class="section-content">
                 {{-- Section Header --}}
-                <div class="mb-16 md:mb-24">
+                <div class="mb-16 md:mb-24 text-center">
                     <span class="text-accent text-sm font-semibold uppercase tracking-widest mb-4 block">Career Path</span>
                     <h2 class="text-display text-main text-reveal">
                         Work <span class="text-accent">Experience</span>
                     </h2>
+                    <p class="text-muted mt-4 max-w-lg mx-auto text-body-lg">A timeline of my professional journey, shaped by challenges and growth.</p>
                 </div>
 
                 {{-- Experience Timeline --}}
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 lg:gap-16">
                     {{-- Timeline --}}
-                    <div class="timeline-parallax">
-                        <div class="timeline-line"></div>
+                    <div class="career-timeline relative">
+                        {{-- Animated timeline line --}}
+                        <div class="career-timeline-track">
+                            <div class="career-timeline-progress"></div>
+                        </div>
 
                         @foreach($experience as $index => $item)
-                        <div class="timeline-item active"
-                            x-data="{ expanded: false }">
-                            <div class="timeline-dot"></div>
-
-                            <div class="space-y-2">
-                                <span class="text-xs font-mono text-accent">{{ $item['period'] }}</span>
-                                <h4 class="text-title text-main">{{ $item['role'] }}</h4>
-                                <p class="text-body-lg text-muted">{{ $item['company'] }}</p>
-
-                                @if(isset($item['description']))
-                                <p class="text-sm text-muted/80 mt-4 leading-relaxed">
-                                    {{ $item['description'] }}
-                                </p>
-                                @endif
-
-                                @if(isset($item['technologies']))
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    @foreach($item['technologies'] as $tech)
-                                    <span class="text-xs px-2 py-1 rounded bg-accent/10 text-accent">{{ $tech }}</span>
-                                    @endforeach
+                        <div class="career-card-wrapper timeline-card-reveal" data-index="{{ $index }}">
+                            {{-- Year marker --}}
+                            <div class="career-dot-wrapper">
+                                <div class="career-dot">
+                                    <div class="career-dot-ping"></div>
                                 </div>
-                                @endif
+                                <span class="career-year">{{ Str::before($item['period'], ' ') }}</span>
+                            </div>
+
+                            {{-- Card --}}
+                            <div class="career-card group">
+                                <div class="career-card-glow"></div>
+                                <div class="career-card-inner">
+                                    <div class="flex items-start justify-between gap-4 mb-3">
+                                        <div>
+                                            <h4 class="text-lg font-bold text-main group-hover:text-accent transition-colors duration-300">{{ $item['role'] }}</h4>
+                                            <p class="text-body text-muted">{{ $item['company'] }}</p>
+                                        </div>
+                                        <span class="shrink-0 text-[11px] font-mono text-accent/70 bg-accent/8 px-3 py-1.5 rounded-full border border-accent/15 whitespace-nowrap">
+                                            {{ $item['period'] }}
+                                        </span>
+                                    </div>
+
+                                    @if(isset($item['description']))
+                                    <p class="text-sm text-muted/80 leading-relaxed mt-2">
+                                        {{ $item['description'] }}
+                                    </p>
+                                    @endif
+
+                                    @if(isset($item['technologies']))
+                                    <div class="flex flex-wrap gap-2 mt-5">
+                                        @foreach($item['technologies'] as $tech)
+                                        <span class="career-tech-tag">{{ $tech }}</span>
+                                        @endforeach
+                                    </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
 
-                    {{-- Recommendations --}}
-                    <div class="lg:sticky lg:top-24 h-fit">
-                        <div class="parallax-card p-8">
-                            <h3 class="text-lg font-bold text-main mb-8 flex items-center gap-3">
-                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                </svg>
-                                What People Say
-                            </h3>
+                    {{-- Recommendations - Sticky --}}
+                    <div class="lg:sticky lg:top-28 h-fit">
+                        <div class="career-rec-card">
+                            <div class="career-rec-card-inner">
+                                <h3 class="text-lg font-bold text-main mb-8 flex items-center gap-3">
+                                    <span class="career-rec-icon">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </span>
+                                    What People Say
+                                </h3>
 
-                            <div x-data="{ 
-                                current: 0, 
-                                items: {{ count($recommendations) }},
-                                init() {
-                                    setInterval(() => {
-                                        this.current = (this.current + 1) % this.items;
-                                    }, 5000);
-                                }
-                            }">
-                                <div class="relative min-h-[180px]">
-                                    @foreach($recommendations as $index => $rec)
-                                    <div
-                                        x-show="current === {{ $index }}"
-                                        x-transition:enter="transition ease-out duration-500"
-                                        x-transition:enter-start="opacity-0 translate-x-4"
-                                        x-transition:enter-end="opacity-100 translate-x-0"
-                                        x-transition:leave="transition ease-in duration-300 absolute inset-0"
-                                        x-transition:leave-start="opacity-100 translate-x-0"
-                                        x-transition:leave-end="opacity-0 -translate-x-4"
-                                        class="w-full">
-                                        <blockquote class="text-body-lg text-main/90 leading-relaxed italic mb-6">
-                                            "{{ $rec['text'] }}"
-                                        </blockquote>
-                                        <div>
-                                            <p class="font-bold text-main">{{ $rec['author'] }}</p>
-                                            <p class="text-sm text-muted">{{ $rec['title'] }}</p>
+                                <div x-data="{
+                                    current: 0,
+                                    items: {{ count($recommendations) }},
+                                    init() {
+                                        setInterval(() => {
+                                            this.current = (this.current + 1) % this.items;
+                                        }, 12000);
+                                    }
+                                }">
+                                    <div class="relative min-h-[180px]">
+                                        @foreach($recommendations as $index => $rec)
+                                        <div
+                                            x-show="current === {{ $index }}"
+                                            x-transition:enter="transition ease-out duration-700"
+                                            x-transition:enter-start="opacity-0 translate-y-4"
+                                            x-transition:enter-end="opacity-100 translate-y-0"
+                                            x-transition:leave="transition ease-in duration-500 absolute inset-0"
+                                            x-transition:leave-start="opacity-100 translate-y-0"
+                                            x-transition:leave-end="opacity-0 -translate-y-4"
+                                            class="w-full">
+                                            <blockquote class="text-body-lg text-main/90 leading-relaxed italic mb-6">
+                                                "{{ $rec['text'] }}"
+                                            </blockquote>
+                                            <div>
+                                                <p class="font-bold text-main">{{ $rec['author'] }}</p>
+                                                <p class="text-sm text-muted">{{ $rec['title'] }}</p>
+                                            </div>
                                         </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
-                                </div>
 
-                                {{-- Pagination dots --}}
-                                <div class="flex gap-2 mt-8">
-                                    @foreach($recommendations as $index => $rec)
-                                    <button
-                                        @click="current = {{ $index }}"
-                                        :class="current === {{ $index }} ? 'bg-accent' : 'bg-muted/30'"
-                                        class="w-2 h-2 rounded-full transition-colors duration-300">
-                                    </button>
-                                    @endforeach
+                                    {{-- Pagination dots --}}
+                                    <div class="flex gap-2 mt-8">
+                                        @foreach($recommendations as $index => $rec)
+                                        <button
+                                            @click="current = {{ $index }}"
+                                            :class="current === {{ $index }} ? 'bg-accent w-6' : 'bg-muted/30 w-2'"
+                                            class="h-2 rounded-full transition-all duration-500">
+                                        </button>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +238,7 @@
                 {{-- Section Header --}}
                 <div class="mb-12">
                     <span class="text-accent text-sm font-semibold uppercase tracking-widest mb-6 block">Get In Touch</span>
-                    <h2 class="text-display text-main mb-6 text-reveal">
+                    <h2 class="text-7xl font-bold text-main py-6 text-reveal">
                         Let's Build <span class="text-accent">Amazing</span>
                     </h2>
                     <p class="text-body-lg text-muted max-w-2xl mx-auto">

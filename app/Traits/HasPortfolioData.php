@@ -10,8 +10,8 @@ trait HasPortfolioData
     public function getSkillsData(): array
     {
         return [
-            'Frontend' => ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js'],
-            'Backend' => ['Node.js', 'Python', 'PHP', 'Laravel', 'PostgreSQL', 'MongoDB', 'MySQL', 'SQL Server'],
+            'Frontend' => ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Matter.js', 'GSAP', 'Lenis', 'Three.js', 'WebGL', 'Framer Motion'],
+            'Backend' => ['Node.js', 'Python', 'PHP', 'Laravel', 'PostgreSQL', 'MySQL', 'SQL Server'],
             'Frameworks' => ['Laravel', 'Vue.js', 'Inertia.js', 'Livewire', 'Express.js', 'Flask'],
             'DevOps & Cloud' => ['Azure Data Studio', 'Docker', 'GitHub Actions', 'Google Cloud', 'Firebase'],
             'Other' => ['RESTful APIs', 'WebSockets', 'Spatie Packages', 'MVC Architecture', 'OOP', 'YOLOv8', 'OpenCV', 'OpenAI']
@@ -247,6 +247,11 @@ trait HasPortfolioData
                 'text' => 'A pleasure to work with. He has a great eye for detail and is always willing to go the extra mile to ensure project success.',
                 'author' => 'Ms Kristel Matriano',
                 'title' => 'Senior Software Engineer at MobileMinds Inc.'
+            ],
+            [
+                'text' => 'Jed is one of those rare backend developers who truly cares about the elegance and scalability of our code. While working together on our mobile app, I was consistently impressed by his ability to design robust REST APIs and  optimize complex database queries. His commitment to clean code and thorough unit testing significantly reduced our production bugs and improved system reliability. Any engineering team would be happy to have Jed as a core contributor.',
+                'author' => 'Timothy Cruz',
+                'title' => 'Senior Mobile Developer'
             ]
         ];
     }

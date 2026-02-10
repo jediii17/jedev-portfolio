@@ -214,178 +214,378 @@ export function initHeroAnimations() {
     const hero = document.querySelector('.parallax-hero');
     if (!hero) return;
 
-    // Master timeline for orchestrated entrance
+    // ═══════════════════════════════════════════
+    // PART 1: Navigation entrance
+    // ═══════════════════════════════════════════
+    const nav = document.querySelector('.nav-parallax');
+    if (nav) {
+        gsap.set(nav, { y: -80, opacity: 0 });
+        gsap.to(nav, {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            delay: 0.1,
+            ease: 'power3.out',
+        });
+
+        // Stagger nav links
+        const navLinks = nav.querySelectorAll('.nav-link, .theme-switch, .magnetic-btn');
+        if (navLinks.length) {
+            gsap.set(navLinks, { y: -20, opacity: 0 });
+            gsap.to(navLinks, {
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                stagger: 0.08,
+                delay: 0.4,
+                ease: 'power2.out',
+            });
+        }
+    }
+
+    // ═══════════════════════════════════════════
+    // PART 2: Cinematic hero entrance timeline
+    // ═══════════════════════════════════════════
     const tl = gsap.timeline({
         defaults: { ease: 'power4.out' },
-        delay: 0.3, // Small delay after loader finishes
+        delay: 0.3,
     });
 
-    // 1. Profile image — scale up with elastic bounce
-    const profile = hero.querySelector('.hero-profile');
-    if (profile) {
-        gsap.set(profile, { scale: 0, opacity: 0, rotation: -10 });
-        tl.to(profile, {
+    // 1. Gradient blobs — scale in first for ambient glow
+    const blobs = hero.querySelectorAll('.gradient-blob');
+    if (blobs.length) {
+        gsap.set(blobs, { scale: 0.2, opacity: 0 });
+        tl.to(blobs, {
             scale: 1,
-            opacity: 1,
-            rotation: 0,
-            duration: 1.2,
-            ease: 'elastic.out(1, 0.5)',
+            opacity: 0.6,
+            duration: 2.5,
+            stagger: 0.3,
+            ease: 'power2.out',
+            onComplete: () => {
+                // Continuous orbit animation for blobs
+                blobs.forEach((blob, i) => {
+                    gsap.to(blob, {
+                        rotation: 360,
+                        duration: 40 + i * 15,
+                        repeat: -1,
+                        ease: 'none',
+                    });
+                    gsap.to(blob, {
+                        scale: 0.85 + Math.random() * 0.3,
+                        duration: 4 + i * 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut',
+                    });
+                });
+            },
         }, 0);
     }
 
-    // 2. "Available for hire" badge — slide in from left with fade
+    // 2. Profile image — 3D rotation entrance + continuous float
+    const profile = hero.querySelector('.hero-profile');
+    if (profile) {
+        gsap.set(profile, { scale: 0, opacity: 0, rotateY: -90, transformPerspective: 800 });
+        tl.to(profile, {
+            scale: 1,
+            opacity: 1,
+            rotateY: 0,
+            duration: 1.4,
+            ease: 'elastic.out(1, 0.6)',
+            onComplete: () => {
+                // Continuous gentle float
+                gsap.to(profile, {
+                    y: -8,
+                    duration: 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                });
+            },
+        }, 0.1);
+    }
+
+    // 3. "Available for hire" badge — slide in with shine sweep
     const badge = hero.querySelector('.hero-subtitle:first-child');
     if (badge) {
-        gsap.set(badge, { x: -60, opacity: 0, scale: 0.8 });
+        gsap.set(badge, { x: -80, opacity: 0, scale: 0.7 });
         tl.to(badge, {
             x: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.8,
+            duration: 1,
             ease: 'back.out(1.7)',
+            onComplete: () => {
+                // Pulse animation for the green dot
+                const dot = badge.querySelector('.animate-pulse');
+                if (dot) {
+                    gsap.to(dot, {
+                        scale: 1.3,
+                        boxShadow: '0 0 12px rgba(74, 222, 128, 0.6)',
+                        duration: 1,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut',
+                    });
+                }
+            },
         }, 0.2);
     }
 
-    // 3. "Hi, I'm" title — sweep up with clip-path reveal
+    // 4. "Hi, I'm" title — clip-path sweep from left
     const heroTitle = hero.querySelectorAll('.hero-title-line');
     heroTitle.forEach((line, i) => {
         gsap.set(line, {
-            y: 120,
+            y: 100,
             opacity: 0,
-            clipPath: 'inset(100% 0 0 0)',
+            clipPath: 'inset(0 100% 0 0)',
         });
         tl.to(line, {
             y: 0,
             opacity: 1,
-            clipPath: 'inset(0% 0 0 0)',
+            clipPath: 'inset(0 0% 0 0)',
             duration: 1.2,
             ease: 'power4.out',
-        }, 0.3 + i * 0.1);
+        }, 0.35 + i * 0.12);
     });
 
-    // 4. Dynamic typed text container — fade in from right
+    // 5. Typed text — slide in from right with scale
     const typedDisplay = hero.querySelector('.text-display');
     if (typedDisplay) {
-        gsap.set(typedDisplay, { x: 80, opacity: 0 });
+        gsap.set(typedDisplay, { x: 120, opacity: 0, scale: 0.9 });
         tl.to(typedDisplay, {
             x: 0,
             opacity: 1,
-            duration: 1,
+            scale: 1,
+            duration: 1.2,
             ease: 'power3.out',
-        }, 0.6);
+        }, 0.55);
     }
 
-    // 5. Tagline subtitle — slide up
-    const tagline = hero.querySelector('.hero-subtitle + .hero-title-line + .text-display + .hero-subtitle, p.hero-subtitle');
+    // 6. Tagline subtitle
     const allSubtitles = hero.querySelectorAll('.hero-subtitle');
     allSubtitles.forEach((sub, i) => {
-        // Skip the badge (first subtitle already animated)
-        if (i === 0) return;
-        gsap.set(sub, { y: 40, opacity: 0 });
+        if (i === 0) return; // badge already animated
+        gsap.set(sub, { y: 40, opacity: 0, filter: 'blur(8px)' });
         tl.to(sub, {
             y: 0,
             opacity: 1,
-            duration: 0.9,
+            filter: 'blur(0px)',
+            duration: 1,
             ease: 'power3.out',
         }, 0.7 + i * 0.1);
     });
 
-    // 6. Description paragraph — fade in
+    // 7. Description — blur-in fade
     const description = hero.querySelector('.max-w-2xl.hero-subtitle');
     if (description) {
-        gsap.set(description, { y: 50, opacity: 0 });
+        gsap.set(description, { y: 50, opacity: 0, filter: 'blur(10px)' });
         tl.to(description, {
             y: 0,
             opacity: 1,
-            duration: 1,
+            filter: 'blur(0px)',
+            duration: 1.1,
             ease: 'power3.out',
-        }, 0.8);
+        }, 0.85);
     }
 
-    // 7. CTA buttons — pop in with stagger
+    // 8. CTA buttons — spring pop-in
     const ctaButtons = hero.querySelectorAll('.hero-cta > a, .hero-cta > span');
     if (ctaButtons.length) {
-        gsap.set(ctaButtons, { y: 40, opacity: 0, scale: 0.9 });
+        gsap.set(ctaButtons, { y: 50, opacity: 0, scale: 0.8 });
         tl.to(ctaButtons, {
             y: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'back.out(1.4)',
+            duration: 0.9,
+            stagger: 0.12,
+            ease: 'elastic.out(1, 0.6)',
         }, 1.0);
     }
 
-    // 8. Tech cards — cascade in with slight rotation
+    // 9. "Core Stack" label
+    const coreStackLabel = hero.querySelector('.hero-cta p');
+    if (coreStackLabel) {
+        gsap.set(coreStackLabel, { x: -40, opacity: 0 });
+        tl.to(coreStackLabel, {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+        }, 1.0);
+    }
+
+    // 10. Tech cards — wave cascade with persistent float
     const techCards = hero.querySelectorAll('.tech-card');
     if (techCards.length) {
-        gsap.set(techCards, { y: 50, opacity: 0, scale: 0.85, rotation: -5 });
+        gsap.set(techCards, { y: 60, opacity: 0, scale: 0.8, rotation: -8 });
         tl.to(techCards, {
             y: 0,
             opacity: 1,
             scale: 1,
             rotation: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: 'back.out(1.2)',
-        }, 1.1);
+            duration: 0.8,
+            stagger: 0.07,
+            ease: 'back.out(1.4)',
+            onComplete: () => {
+                // Persistent gentle float per card
+                techCards.forEach((card, i) => {
+                    gsap.to(card, {
+                        y: -4 + (i % 3) * 2,
+                        duration: 2.5 + (i % 2) * 0.8,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: 'sine.inOut',
+                        delay: i * 0.15,
+                    });
+                });
+            },
+        }, 1.15);
     }
 
-    // 9. Social links — fade up last
+    // 11. Social links — cascade up
     const socialLinks = hero.querySelectorAll('.hero-cta:last-child a');
     if (socialLinks.length) {
-        gsap.set(socialLinks, { y: 20, opacity: 0 });
+        gsap.set(socialLinks, { y: 30, opacity: 0, scale: 0.7 });
         tl.to(socialLinks, {
             y: 0,
             opacity: 1,
-            duration: 0.6,
+            scale: 1,
+            duration: 0.7,
             stagger: 0.1,
-            ease: 'power2.out',
+            ease: 'back.out(1.5)',
         }, 1.3);
     }
 
-    // 10. "Core Stack" label
-    const coreStackLabel = hero.querySelector('.hero-cta p');
-    if (coreStackLabel) {
-        gsap.set(coreStackLabel, { x: -30, opacity: 0 });
-        tl.to(coreStackLabel, {
-            x: 0,
-            opacity: 1,
-            duration: 0.6,
+    // 12. Scroll indicator — late entrance with continuous bounce
+    const scrollInd = hero.querySelector('.scroll-indicator');
+    if (scrollInd) {
+        gsap.set(scrollInd, { opacity: 0, y: -30 });
+        tl.to(scrollInd, {
+            opacity: 0.6,
+            y: 0,
+            duration: 0.8,
             ease: 'power2.out',
-        }, 1.0);
+            onComplete: () => {
+                gsap.to(scrollInd, {
+                    y: 12,
+                    duration: 1.4,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                });
+            },
+        }, 1.6);
     }
 
-    // 11. Scroll indicator — fade in late with continuous float
-    gsap.set('.scroll-indicator', { opacity: 0, y: -20 });
-    tl.to('.scroll-indicator', {
-        opacity: 0.6,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        onComplete: () => {
-            // Start continuous float animation after entrance
-            gsap.to('.scroll-indicator', {
-                y: 10,
-                duration: 1.2,
-                repeat: -1,
-                yoyo: true,
-                ease: 'power1.inOut',
-            });
-        }
-    }, 1.6);
+    // ═══════════════════════════════════════════
+    // PART 3: Scroll-based parallax depth
+    // ═══════════════════════════════════════════
+    // Different speeds for each layer as user scrolls past hero
 
-    // 12. Gradient blobs — scale in subtly
-    const blobs = hero.querySelectorAll('.gradient-blob');
-    if (blobs.length) {
-        gsap.set(blobs, { scale: 0.3, opacity: 0 });
-        tl.to(blobs, {
-            scale: 1,
-            opacity: 0.6,
-            duration: 2,
-            stagger: 0.2,
-            ease: 'power2.out',
-        }, 0);
+    // Profile — moves slower (feels further away)
+    if (profile) {
+        gsap.fromTo(profile,
+            { yPercent: 0 },
+            {
+                yPercent: -25,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: hero,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.5,
+                },
+            }
+        );
+    }
+
+    // Title block — mid speed
+    heroTitle.forEach((line, i) => {
+        gsap.to(line, {
+            yPercent: 15 + i * 5,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1.2,
+            },
+        });
+    });
+
+    // Typed text — faster scroll
+    if (typedDisplay) {
+        gsap.to(typedDisplay, {
+            yPercent: 30,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1,
+            },
+        });
+    }
+
+    // CTA row — scrolls fastest (foreground) + fade
+    const ctaRow = hero.querySelectorAll('.hero-cta');
+    ctaRow.forEach((row) => {
+        gsap.to(row, {
+            yPercent: 30,
+            opacity: 0,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: '60% top',
+                scrub: 1,
+                // Ensure it cleans up when scrolling back to top
+                onLeaveBack: self => {
+                    gsap.set(row, { clearProps: 'opacity,yPercent' });
+                }
+            },
+        });
+    });
+
+    // Badge and subtitles — fade and shift
+    if (badge) {
+        gsap.to(badge, {
+            yPercent: 20,
+            opacity: 0,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: '50% top',
+                scrub: 1,
+            },
+        });
+    }
+
+    // Scroll indicator — fade out quickly
+    if (scrollInd) {
+        gsap.to(scrollInd, {
+            opacity: 0,
+            y: -20,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: hero,
+                start: '5% top',
+                end: '20% top',
+                scrub: 0.5,
+            },
+        });
+    }
+
+    // Nav background solidify on scroll
+    if (nav) {
+        ScrollTrigger.create({
+            trigger: hero,
+            start: '80% top',
+            onEnter: () => nav.classList.add('nav-scrolled'),
+            onLeaveBack: () => nav.classList.remove('nav-scrolled'),
+        });
     }
 }
 
@@ -397,6 +597,8 @@ export function initSectionAnimations() {
 
     // Fade up and scale animation for all sections
     gsap.utils.toArray('.parallax-section').forEach((section) => {
+        if (section.closest('.parallax-hero')) return; // Skip hero
+
         const content = section.querySelector('.section-content');
         if (!content) return;
 
@@ -423,6 +625,8 @@ export function initSectionAnimations() {
 
     // Stagger animations for cards/items
     gsap.utils.toArray('.stagger-container').forEach((container) => {
+        if (container.closest('.parallax-hero')) return; // Skip hero as it has its own entrance
+
         const items = container.querySelectorAll('.stagger-item');
         gsap.from(items, {
             y: 60,
@@ -685,6 +889,7 @@ function init() {
         initTextReveals();
         initAnchorLinks();
         initTypedHeadlines();
+        initCareerAnimations();
         initThemeSwitchAnimation();
 
         // Refresh ScrollTrigger after everything is set up
@@ -745,6 +950,159 @@ function initTextReveals() {
     });
 }
 
+
+/**
+ * Career Path — Scroll-driven timeline animations
+ */
+function initCareerAnimations() {
+    if (prefersReducedMotion) return;
+
+    const section = document.querySelector('.career-section');
+    if (!section) return;
+
+    // --- 1. Scroll-driven timeline progress ---
+    const progressLine = section.querySelector('.career-timeline-progress');
+    if (progressLine) {
+        gsap.fromTo(progressLine,
+            { height: '0%' },
+            {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.career-timeline',
+                    start: 'top 80%',
+                    end: 'bottom 30%',
+                    scrub: 1,
+                },
+            }
+        );
+    }
+
+    // --- 2. Card reveal animations (staggered slide-in) ---
+    const cards = gsap.utils.toArray('.timeline-card-reveal');
+    cards.forEach((card, i) => {
+        const inner = card.querySelector('.career-card');
+        const dot = card.querySelector('.career-dot');
+        const yearLabel = card.querySelector('.career-year');
+
+        // Card: slide up + fade in from left
+        gsap.fromTo(card,
+            {
+                opacity: 0,
+                x: -60,
+                y: 40,
+            },
+            {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    end: 'top 55%',
+                    scrub: 1,
+                },
+            }
+        );
+
+        // Dot: scale in with bounce
+        if (dot) {
+            gsap.fromTo(dot,
+                { scale: 0, opacity: 0 },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.5)',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse',
+                    },
+                }
+            );
+        }
+
+        // Year label: fade in
+        if (yearLabel) {
+            gsap.fromTo(yearLabel,
+                { opacity: 0, y: 10 },
+                {
+                    opacity: 0.6,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 78%',
+                        toggleActions: 'play none none reverse',
+                    },
+                }
+            );
+        }
+
+        // Toggle is-active class when card is in center viewport
+        ScrollTrigger.create({
+            trigger: card,
+            start: 'top 60%',
+            end: 'bottom 40%',
+            onEnter: () => card.classList.add('is-active'),
+            onLeave: () => card.classList.remove('is-active'),
+            onEnterBack: () => card.classList.add('is-active'),
+            onLeaveBack: () => card.classList.remove('is-active'),
+        });
+    });
+
+    // --- 3. Card hover 3D tilt ---
+    const careerCards = document.querySelectorAll('.career-card');
+    careerCards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            gsap.to(card, {
+                rotateY: x * 6,
+                rotateX: -y * 6,
+                duration: 0.4,
+                ease: 'power2.out',
+                overwrite: 'auto',
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                rotateY: 0,
+                rotateX: 0,
+                duration: 0.6,
+                ease: 'elastic.out(1, 0.5)',
+                overwrite: 'auto',
+            });
+        });
+    });
+
+    // --- 4. Recommendations card parallax ---
+    const recCard = section.querySelector('.career-rec-card');
+    if (recCard) {
+        gsap.fromTo(recCard,
+            { y: 60, opacity: 0, scale: 0.95 },
+            {
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: recCard,
+                    start: 'top 85%',
+                    end: 'top 55%',
+                    scrub: 1.5,
+                },
+            }
+        );
+    }
+}
 
 /**
  * Initialize Theme Switch Elastic Animation

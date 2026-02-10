@@ -431,6 +431,20 @@ html.lenis, html.lenis body {
     transform: scaleX(0);
 }
 
+.nav-parallax.nav-scrolled {
+    background: rgba(var(--bg-primary-rgb), 0.92);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
 /* ============================================
    Interactive Elements
    ============================================ */
@@ -540,58 +554,280 @@ html.lenis, html.lenis body {
 }
 
 /* ============================================
-   Experience Timeline
+   Career Path / Experience Section
    ============================================ */
 
-.timeline-parallax {
-    position: relative;
+.career-section {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    padding: 6rem 0;
+}
+
+/* --- Floating code decorations --- */
+
+.career-floating-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.career-float-symbol {
+    position: absolute;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.06;
+    font-size: clamp(2rem, 5vw, 4rem);
+    will-change: transform;
+}
+
+.career-float-1 { top: 8%; left: 5%; animation: career-float-a 8s ease-in-out infinite; }
+.career-float-2 { top: 25%; right: 8%; animation: career-float-b 10s ease-in-out infinite; }
+.career-float-3 { bottom: 30%; left: 10%; animation: career-float-a 12s ease-in-out infinite 2s; }
+.career-float-4 { top: 60%; right: 4%; animation: career-float-b 9s ease-in-out infinite 1s; }
+.career-float-5 { bottom: 10%; left: 60%; animation: career-float-a 11s ease-in-out infinite 3s; }
+.career-float-6 { top: 40%; left: 45%; animation: career-float-b 7s ease-in-out infinite 2s; }
+
+@keyframes career-float-a {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(8deg); }
+}
+
+@keyframes career-float-b {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(20px) rotate(-6deg); }
+}
+
+/* --- Timeline track + progress line --- */
+
+.career-timeline {
     padding-left: 3rem;
 }
 
-.timeline-line {
+.career-timeline-track {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(
-        180deg,
-        transparent 0%,
-        var(--accent) 10%,
-        var(--accent) 90%,
-        transparent 100%
-    );
+    background: rgba(var(--accent-rgb, 59, 130, 246), 0.15);
+    border-radius: 999px;
 }
 
-.timeline-item {
+.career-timeline-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(180deg, var(--accent) 0%, rgba(var(--accent-rgb, 59, 130, 246), 0.3) 100%);
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(var(--accent-rgb, 59, 130, 246), 0.4);
+    transition: height 0.1s linear;
+}
+
+/* --- Card wrapper --- */
+
+.career-card-wrapper {
     position: relative;
-    padding: 2rem 0;
-    opacity: 1;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    padding: 1.5rem 0;
+    padding-left: 2rem;
 }
 
-.timeline-item:hover,
-.timeline-item.active {
-    opacity: 1;
-}
+/* --- Dot + year --- */
 
-.timeline-dot {
+.career-dot-wrapper {
     position: absolute;
     left: -3rem;
-    top: 2.5rem;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 16px;
+    top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+}
+
+.career-dot {
+    position: relative;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background: var(--bg-primary);
     border: 3px solid var(--accent);
-    transition: transform 0.3s ease, background 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.timeline-item:hover .timeline-dot,
-.timeline-item.active .timeline-dot {
+.career-card-wrapper:hover .career-dot,
+.career-card-wrapper.is-active .career-dot {
     background: var(--accent);
-    transform: translateX(-50%) scale(1.2);
+    transform: scale(1.3);
+    box-shadow: 0 0 16px rgba(var(--accent-rgb, 59, 130, 246), 0.5);
+}
+
+.career-dot-ping {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0;
+    animation: career-ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.career-card-wrapper.is-active .career-dot-ping {
+    animation: career-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes career-ping {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+.career-year {
+    font-size: 0.6rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    color: var(--accent);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    margin-top: 0.25rem;
+}
+
+/* --- Glassmorphism card --- */
+
+.career-card {
+    position: relative;
+    background: rgba(var(--bg-secondary-rgb, 30, 30, 46), 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+:root:not(.dark) .career-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+.career-card:hover {
+    transform: translateY(-6px) translateX(4px);
+    border-color: rgba(var(--accent-rgb, 59, 130, 246), 0.3);
+    box-shadow:
+        0 20px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(var(--accent-rgb, 59, 130, 246), 0.1);
+}
+
+.career-card-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 30% 20%,
+        rgba(var(--accent-rgb, 59, 130, 246), 0.12) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.career-card:hover .career-card-glow {
+    opacity: 1;
+}
+
+.career-card-inner {
+    position: relative;
+    padding: 1.75rem;
+    z-index: 1;
+}
+
+/* --- Tech tags --- */
+
+.career-tech-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    background: rgba(var(--accent-rgb, 59, 130, 246), 0.08);
+    color: var(--accent);
+    border: 1px solid rgba(var(--accent-rgb, 59, 130, 246), 0.12);
+    transition: all 0.3s ease;
+}
+
+.career-card:hover .career-tech-tag {
+    background: rgba(var(--accent-rgb, 59, 130, 246), 0.15);
+    border-color: rgba(var(--accent-rgb, 59, 130, 246), 0.25);
+}
+
+/* --- Recommendations card --- */
+
+.career-rec-card {
+    position: relative;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: rgba(var(--bg-secondary-rgb, 30, 30, 46), 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.4s ease;
+}
+
+:root:not(.dark) .career-rec-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+.career-rec-card:hover {
+    border-color: rgba(var(--accent-rgb, 59, 130, 246), 0.2);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+.career-rec-card-inner {
+    padding: 2rem;
+}
+
+.career-rec-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--accent-rgb, 59, 130, 246), 0.1);
+    color: var(--accent);
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 768px) {
+    .career-timeline {
+        padding-left: 2.5rem;
+    }
+
+    .career-dot-wrapper {
+        left: -2.5rem;
+    }
+
+    .career-card-inner {
+        padding: 1.25rem;
+    }
+
+    .career-card-wrapper {
+        padding-left: 1.5rem;
+    }
+
+    .career-float-symbol {
+        display: none;
+    }
+
+    .career-section {
+        padding: 3rem 0;
+    }
 }
 
 /* ============================================
@@ -916,6 +1152,49 @@ button:focus-visible,
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* --- Interactive Legend Buttons --- */
+
+.tech-legend-btn {
+    position: relative;
+    outline: none;
+}
+
+.tech-legend-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.3);
+}
+
+.tech-legend-btn:hover .tech-legend-dot {
+    transform: scale(1.4);
+}
+
+.tech-legend-btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.tech-legend-btn.active {
+    border-color: var(--legend-color, rgba(255, 255, 255, 0.3));
+    box-shadow:
+        0 0 16px -2px var(--legend-color, rgba(255, 255, 255, 0.2)),
+        inset 0 0 12px -4px var(--legend-color, rgba(255, 255, 255, 0.1));
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tech-legend-btn.active .tech-legend-dot {
+    transform: scale(1.6);
+    animation: legend-dot-pulse 1.5s ease-in-out infinite;
+}
+
+.tech-legend-btn.active span:last-child {
+    color: var(--text-primary);
+}
+
+@keyframes legend-dot-pulse {
+    0%, 100% { transform: scale(1.6); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
 }
 
 @media (max-width: 768px) {

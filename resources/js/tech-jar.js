@@ -20,6 +20,7 @@ const CATEGORY_COLORS = {
 
 let engine, render, runner;
 let hasStarted = false;
+let activeCategory = null;
 
 /**
  * Initialize the Tech Jar physics simulation
@@ -84,23 +85,29 @@ export function initTechJar() {
     }
 
     // Emoji ideas
-    const emojis = ['🚀', '💻', '⚡', '🎨', '🛠️', '📱', '🌐', '🔥', '✨', '🧠', '⚙️', '🔋', '🌈', '👾', '🎮'];
+    const emojis = ['🚀', '💻', '⚡', '🎨', '🛠️', '📱', '🌐', '🔥', '✨', '🧠', '⚙️', '🔋', '🌈', '👾', '🎮', '💡', '📚', '🎯', '🙈', '👨🏻‍💻'];
 
     // Build block bodies
     const blocks = [];
     const blockBodies = [];
 
     // Config for larger, rounder blocks
-    const blockHeight = 52;
-    const radius = 16;
+    const blockHeight = 78; // Increased from 52
+    const radius = 40;      // Increased from 20
+    const fontSize = 24;    // Increased from 14
+
+    // Use a temporary context to measure text precisely
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.font = `bold ${fontSize}px 'Space Grotesk', sans-serif`;
 
     // Add tech blocks
     Object.entries(techData).forEach(([category, items]) => {
         const colors = CATEGORY_COLORS[category] || { bg: '#6b7280', text: '#ffffff' };
 
         items.forEach((item) => {
-            const labelWidth = item.length * 9 + 40; // Approximate width based on text
-            const blockWidth = Math.max(100, Math.min(180, labelWidth));
+            const textWidth = tempCtx.measureText(item).width;
+            const blockWidth = textWidth + 50; // Dynamic width with padding
 
             const x = Math.random() * (width - 200) + 100;
             const y = -100 - Math.random() * 500;
@@ -114,27 +121,34 @@ export function initTechJar() {
                 angle: (Math.random() - 0.5) * 1,
             });
 
-            blocks.push({ type: 'text', body, label: item, colors });
+            blocks.push({ type: 'text', body, label: item, colors, category });
             blockBodies.push(body);
         });
     });
 
     // Add emoji blocks
-    for (let i = 0; i < 12; i++) {
+    for (let i = 1; i < 18; i++) {
         const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-        const emojiSize = 45;
+        const emojiSize = 65;
         const x = Math.random() * (width - 100) + 50;
         const y = -200 - Math.random() * 800;
 
         const body = Bodies.circle(x, y, emojiSize / 2, {
-            render: { fillStyle: 'rgba(255,255,255,0.1)' },
+            render: {}, // No background
             friction: 0.3,
             restitution: 0.6,
             density: 0.001,
         });
 
-        blocks.push({ type: 'emoji', body, label: emoji, size: emojiSize });
+        blocks.push({ type: 'emoji', body, label: emoji, size: emojiSize, category: null });
         blockBodies.push(body);
+    }
+
+    // Shuffle blocks + blockBodies together (Fisher-Yates) for random fall order
+    for (let i = blocks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [blocks[i], blocks[j]] = [blocks[j], blocks[i]];
+        [blockBodies[i], blockBodies[j]] = [blockBodies[j], blockBodies[i]];
     }
 
     // Mouse interaction
@@ -151,28 +165,46 @@ export function initTechJar() {
     mouse.element.removeEventListener('mousewheel', mouse.mousewheel);
     mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel);
 
-    // Custom draw loop
+    // Custom draw loop with highlight support
     Events.on(render, 'afterRender', () => {
         const ctx = render.context;
 
         blocks.forEach((block) => {
-            const { body, type, label, colors, size } = block;
+            const { body, type, label, colors, size, category } = block;
             const { x, y } = body.position;
             const angle = body.angle;
+
+            // Determine if this block should be highlighted or dimmed
+            const isHighlighted = activeCategory && category === activeCategory;
+            const isDimmed = activeCategory && category !== activeCategory;
+            const dimOpacity = isDimmed ? 0.15 : 1;
 
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(angle);
+            ctx.globalAlpha = dimOpacity;
 
             if (type === 'text') {
                 const w = body.bounds.max.x - body.bounds.min.x;
                 const h = blockHeight;
+
+                // Glow effect for highlighted blocks
+                if (isHighlighted) {
+                    ctx.shadowColor = colors.bg;
+                    ctx.shadowBlur = 20;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                }
 
                 // Redraw rounded rect for crispness
                 ctx.beginPath();
                 ctx.roundRect(-w / 2, -h / 2, w, h, radius);
                 ctx.fillStyle = colors.bg;
                 ctx.fill();
+
+                // Reset shadow before drawing other elements
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
 
                 // Glass shine
                 const gradient = ctx.createLinearGradient(0, -h / 2, 0, h / 2);
@@ -181,13 +213,19 @@ export function initTechJar() {
                 ctx.fillStyle = gradient;
                 ctx.fill();
 
-                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-                ctx.lineWidth = 1;
+                // Highlighted border ring
+                if (isHighlighted) {
+                    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    ctx.lineWidth = 2.5;
+                } else {
+                    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                    ctx.lineWidth = 1;
+                }
                 ctx.stroke();
 
                 // Text
                 ctx.fillStyle = '#ffffff';
-                ctx.font = `bold 14px 'Inter', sans-serif`;
+                ctx.font = `bold ${fontSize}px 'Inter', sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(label, 0, 1);
@@ -243,6 +281,33 @@ export function initTechJar() {
     };
 
     window.addEventListener('resize', handleResize);
+
+    // --- Legend click handler ---
+    const legendContainer = document.getElementById('tech-jar-legend');
+    if (legendContainer) {
+        const legendBtns = legendContainer.querySelectorAll('.tech-legend-btn');
+
+        legendBtns.forEach((btn) => {
+            const color = btn.dataset.color;
+            // Set CSS custom property for active glow color
+            btn.style.setProperty('--legend-color', color);
+
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+
+                if (activeCategory === category) {
+                    // Deselect
+                    activeCategory = null;
+                    btn.classList.remove('active');
+                } else {
+                    // Deactivate all, activate this one
+                    activeCategory = category;
+                    legendBtns.forEach((b) => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+            });
+        });
+    }
 }
 
 export default { initTechJar };
