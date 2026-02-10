@@ -76,7 +76,7 @@ trait HasPortfolioData
                 ]
             ],
             [
-                'title' => 'Employee Portal Redevelopment (Asia United Bank)',
+                'title' => 'Employee Portal Redevelopment',
                 'year' => '2025',
                 'description' => 'Full system redevelopment migrating a legacy ColdFusion employee portal to Laravel 12. Improved performance, security, and maintainability.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'SQL Server', 'Docker', 'Spatie Multitenancy'],
@@ -88,7 +88,7 @@ trait HasPortfolioData
                 ]
             ],
             [
-                'title' => 'Desktop to Web Tellering System Migration (Asia United Bank)',
+                'title' => 'Desktop to Web Tellering System Migration',
                 'year' => '2025',
                 'description' => 'Transformed a desktop tellering system into a modern web application with a custom CMS using Laravel 12 and Vue 3.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'WebSockets (Reverb)'],
@@ -100,7 +100,7 @@ trait HasPortfolioData
                 ]
             ],
             [
-                'title' => 'Monitoring Work Order System (MobileMinds, Inc)',
+                'title' => 'Monitoring Work Order System',
                 'year' => '2025',
                 'description' => 'Web-based system for tracking work orders, time charges, leave management, and manpower allocation across projects.',
                 'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL'],
@@ -112,7 +112,7 @@ trait HasPortfolioData
                 ]
             ],
             [
-                'title' => 'Content Management System (Rustan’s Coffee Corp)',
+                'title' => 'Content Management System',
                 'year' => '2024',
                 'description' => 'Centralized administration system for employee records, user roles, and audit trails to ensure meaningful accountability.',
                 'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL'],
