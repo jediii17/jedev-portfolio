@@ -1,5 +1,7 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
+import { initParallax } from './parallax';
+import { initTechJar } from './tech-jar';
 
 import.meta.glob([
     './assets/images/**',
@@ -30,3 +32,9 @@ Alpine.store('theme', {
 });
 
 Alpine.start();
+
+// Initialize parallax animations
+initParallax();
+
+// Initialize tech jar physics
+initTechJar();

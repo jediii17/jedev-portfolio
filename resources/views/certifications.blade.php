@@ -1,6 +1,6 @@
 <x-layout>
-    <div class="py-12 animate-fade-in-up">
-        <div class="flex items-center justify-between mb-12">
+    <div class="py-12 px-20 animate-fade-in-up">
+        <div class="flex items-center justify-between py-12">
             <div>
                 <h1 class="text-3xl font-bold text-primary">All Certifications</h1>
                 <p class="text-muted mt-2">A comprehensive list of my professional certifications and achievements.</p>
@@ -9,7 +9,7 @@
                 <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                Back to Home
+                Back to Homet
             </a>
         </div>
 

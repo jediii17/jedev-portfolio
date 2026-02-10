@@ -5,10 +5,16 @@
 @source "../**/*.blade.php";
 @source "../**/*.js";
 
+/* ============================================
+   Modern Parallax Portfolio Styles
+   ============================================ */
+
 @theme inline {
-    --font-display: 'Manrope', sans-serif;
-    --font-body: 'Manrope', sans-serif;
+    /* Typography */
+    --font-display: 'Space Grotesk', 'Inter', sans-serif;
+    --font-body: 'Inter', 'Manrope', sans-serif;
     
+    /* Colors - mapped from CSS variables */
     --color-main: var(--text-primary);
     --color-muted: var(--text-secondary);
     --color-page: var(--bg-primary);
@@ -18,23 +24,53 @@
 }
 
 :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #ffffff; /* slate-50 */
-    --text-primary: #0f172a; /* slate-900 */
-    --text-secondary: #64748b; /* slate-500 */
-    --accent: #3b82f6; /* blue-500 */
-    --accent-hover: #2563eb; /* blue-600 */
+    --bg-primary: #0a0a0a;
+    --bg-primary-rgb: 10, 10, 10;
+    --bg-secondary: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --surface-border: #1f1f1f;
+    
+    /* Parallax layers */
+    --parallax-slow: 0.3;
+    --parallax-medium: 0.5;
+    --parallax-fast: 0.8;
 }
 
-/* Dark mode overrides */
+/* Light mode */
+:root:not(.dark) {
+    --bg-primary: #fafafa;
+    --bg-primary-rgb: 250, 250, 250;
+    --bg-secondary: #ffffff;
+    --text-primary: #0a0a0a;
+    --text-secondary: #52525b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --surface-border: #e4e4e7;
+}
+
+/* Dark mode (default) */
 .dark {
-    --bg-primary: #050505; /* Near black */
-    --bg-secondary: #0d0d0d; /* Slightly lighter for cards */
+    --bg-primary: #0a0a0a;
+    --bg-primary-rgb: 10, 10, 10;
+    --bg-secondary: #111111;
     --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --accent: #3b82f6; 
+    --text-secondary: #a1a1aa;
+    --accent: #3b82f6;
     --accent-hover: #60a5fa;
-    --surface-border: #1a1a1a;
+    --surface-border: #1f1f1f;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+html {
+    scroll-behavior: auto !important; /* Lenis handles smooth scroll */
+    scroll-padding-top: 4rem; /* Match nav height */
+    /* scroll-snap removed - conflicts with smooth parallax scrolling */
 }
 
 body {
@@ -42,9 +78,563 @@ body {
     color: var(--text-primary);
     font-family: var(--font-body);
     transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
 }
 
-/* Animations */
+/* Lenis smooth scroll wrapper */
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* ============================================
+   Typography Scale (Modern Large Text)
+   ============================================ */
+
+.text-hero {
+    font-size: clamp(1rem, 10vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+}
+
+.text-display {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    height: 1.25em; /* Fixed height to prevent layout shift */
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap; /* Prevent wrapping jumps */
+}
+
+.text-headline {
+    font-size: clamp(1.75rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+}
+
+.text-title {
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+}
+
+.text-body-lg {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    line-height: 1.6;
+}
+
+/* ============================================
+   Parallax Sections
+   ============================================ */
+
+.parallax-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* scroll-snap removed for smooth parallax */
+}
+
+/* Split-Screen Layouts */
+.split-slide {
+    display: flex;
+    align-items: stretch;
+    height: 100vh;
+    overflow: hidden;
+    /* scroll-snap removed for smooth parallax */
+}
+
+.col-half {
+    flex-basis: 50%;
+    position: relative;
+    height: 100%;
+}
+
+.col-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vw;
+    background: var(--bg-surface);
+}
+
+.col-image-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 160vh; /* Extra height for GSAP parallax */
+}
+
+.col-image-wrap img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .split-slide {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+    }
+    .col-half {
+        width: 100%;
+        height: 50vh;
+    }
+    .col-content {
+        padding: 10vw 6vw;
+    }
+}
+
+
+.parallax-section-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    padding: 4rem 2rem;
+}
+
+/* Parallax background layers */
+.parallax-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.parallax-bg-image {
+    position: absolute;
+    inset: -20%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
+.parallax-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+/* Gradient overlays */
+.overlay-gradient-dark {
+    background: linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.3) 0%,
+        rgba(10, 10, 10, 0.7) 50%,
+        rgba(10, 10, 10, 0.95) 100%
+    );
+}
+
+.overlay-gradient-radial {
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        rgba(10, 10, 10, 0.6) 70%,
+        rgba(10, 10, 10, 0.95) 100%
+    );
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.parallax-hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    /* scroll-snap removed for smooth parallax */
+}
+
+.parallax-hero-bg {
+    position: absolute;
+    inset: -30%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4) contrast(1.1);
+    will-change: transform;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero-title-line {
+    display: block;
+    overflow: hidden;
+}
+
+.hero-title-word {
+    display: inline-block;
+    will-change: transform;
+}
+
+/* Profile image parallax */
+.hero-profile {
+    position: relative;
+    width: clamp(120px, 20vw, 200px);
+    height: clamp(120px, 20vw, 200px);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-profile:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.hero-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.hero-profile:hover img {
+    transform: scale(1.1);
+}
+
+/* Hero scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+.scroll-indicator-mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid currentColor;
+    border-radius: 12px;
+    position: relative;
+}
+
+.scroll-indicator-mouse::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: currentColor;
+    border-radius: 2px;
+    animation: scroll-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: 0.5; }
+}
+
+/* ============================================
+   Section Animations
+   ============================================ */
+
+.section-content {
+    opacity: 1;
+}
+
+/* Stagger animation containers */
+.stagger-container .stagger-item {
+    will-change: transform, opacity;
+}
+
+/* Word wrap for text animations */
+.word-wrap {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.word {
+    display: inline-block;
+    will-change: transform;
+}
+
+/* Split text animation */
+.split-text {
+    overflow: hidden;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+
+.nav-parallax {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    background: rgba(var(--bg-primary-rgb), 0.6);
+    border-bottom: 1px solid var(--surface-border);
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+:root:not(.dark) .nav-parallax {
+    background: rgba(var(--bg-primary-rgb), 0.8);
+}
+
+.nav-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+/* ============================================
+   Interactive Elements
+   ============================================ */
+
+/* Magnetic button effect */
+.magnetic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 9999px;
+    background: var(--accent);
+    color: white;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+}
+
+.magnetic-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.magnetic-btn:hover::before {
+    opacity: 1;
+}
+
+.magnetic-btn:hover {
+    box-shadow: 
+        0 20px 40px -10px rgba(59, 130, 246, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Card hover effects */
+.parallax-card {
+    position: relative;
+    background: var(--bg-secondary);
+    border: 1px solid var(--surface-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease;
+}
+
+.parallax-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   Project Cards
+   ============================================ */
+
+.project-card {
+    position: relative;
+    height: 400px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    border: 1px solid var(--surface-border);
+}
+
+.project-card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card:hover .project-card-bg {
+    transform: scale(1.1);
+}
+
+.project-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+
+.project-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    transform: translateY(10px);
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-card-content {
+    transform: translateY(0);
+}
+
+/* ============================================
+   Experience Timeline
+   ============================================ */
+
+.timeline-parallax {
+    position: relative;
+    padding-left: 3rem;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--accent) 10%,
+        var(--accent) 90%,
+        transparent 100%
+    );
+}
+
+.timeline-item {
+    position: relative;
+    padding: 2rem 0;
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.timeline-item:hover,
+.timeline-item.active {
+    opacity: 1;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -3rem;
+    top: 2.5rem;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 3px solid var(--accent);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot,
+.timeline-item.active .timeline-dot {
+    background: var(--accent);
+    transform: translateX(-50%) scale(1.2);
+}
+
+/* ============================================
+   Skills Section
+   ============================================ */
+
+.skill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--surface-border);
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-badge:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+
+.contact-section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* ============================================
+   Animations (Base)
+   ============================================ */
+
 @keyframes fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -53,7 +643,7 @@ body {
 @keyframes fade-in-up {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -61,44 +651,27 @@ body {
     }
 }
 
-@keyframes path-draw {
-    0% {
-        stroke-dashoffset: 300;
-        opacity: 0;
-    }
-    50% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-    }
-    100% {
-        stroke-dashoffset: -300;
-        opacity: 0;
-    }
-}
-
-@keyframes logo-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
+    animation: fade-in 0.6s ease-out forwards;
 }
 
 .animate-fade-in-up {
-    animation: fade-in-up 0.5s ease-out forwards;
+    animation: fade-in-up 0.8s ease-out forwards;
 }
 
-.animate-path-draw {
-    stroke-dasharray: 300;
-    animation: path-draw 3s ease-in-out infinite;
+.animate-float {
+    animation: float 3s ease-in-out infinite;
 }
 
-.animate-logo-pulse {
-    animation: logo-pulse 2s ease-in-out infinite;
-}
+/* ============================================
+   Loader
+   ============================================ */
 
-/* Loader Styles */
 .loader-overlay {
     position: fixed;
     inset: 0;
@@ -115,3 +688,432 @@ body {
     opacity: 0;
     pointer-events: none;
 }
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .parallax-section-content {
+        padding: 3rem 1.5rem;
+    }
+    
+    .project-card {
+        height: 320px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .parallax-hero {
+        min-height: 90vh;
+        min-height: 90dvh;
+    }
+    
+    .hero-content {
+        padding: 1.5rem;
+    }
+    
+    .parallax-section-content {
+        padding: 2rem 1rem;
+    }
+    
+    .timeline-parallax {
+        padding-left: 2rem;
+    }
+    
+    .timeline-dot {
+        left: -2rem;
+    }
+    
+    .project-card {
+        height: 280px;
+    }
+    
+    .scroll-indicator {
+        bottom: 1.5rem;
+    }
+    
+    /* Reduce parallax intensity on mobile */
+    .parallax-bg-image {
+        inset: -10%;
+    }
+    
+    .parallax-hero-bg {
+        inset: -15%;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .hero-profile {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .magnetic-btn {
+        padding: 0.875rem 2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   Gradient Mesh Background
+   ============================================ */
+
+.gradient-mesh {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.gradient-blob {
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    will-change: transform;
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gradient-blob-1 {
+    background: rgba(59, 130, 246, 0.4);
+    top: -20%;
+    left: -10%;
+}
+
+.gradient-blob-2 {
+    background: rgba(139, 92, 246, 0.4);
+    top: 30%;
+    right: -20%;
+}
+
+.gradient-blob-3 {
+    background: rgba(236, 72, 153, 0.3);
+    bottom: -10%;
+    left: 30%;
+}
+
+/* ============================================
+   Tech Cards (Hero)
+   ============================================ */
+
+.tech-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    perspective: 1000px;
+}
+
+.tech-card:hover {
+    border-color: var(--accent-color, rgba(255, 255, 255, 0.2));
+    transform: translateY(-4px);
+}
+
+.tech-card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: blur(20px);
+}
+
+.tech-card:hover .tech-card-glow {
+    opacity: 0.15;
+}
+
+.tech-card-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    z-index: 1;
+}
+
+/* ============================================
+   Typed Cursor
+   ============================================ */
+
+.typed-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    color: var(--accent);
+    font-weight: 300;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ============================================
+   Accessibility - Focus States
+   ============================================ */
+
+*:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    z-index: 10000;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ============================================
+   Tech Stack Jar (Matter.js)
+   ============================================ */
+
+.tech-jar-section {
+    padding: 6rem 0;
+    background: var(--bg-primary);
+}
+
+.tech-jar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    margin: 3rem auto 0;
+    cursor: grab;
+}
+
+.tech-jar-wrapper:active {
+    cursor: grabbing;
+}
+
+#tech-jar-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Glass Jar Effects */
+.jar-glass-left, .jar-glass-right, .jar-glass-bottom {
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.jar-glass-left, .jar-glass-right {
+    top: 0;
+    width: 15px;
+    height: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.jar-glass-left {
+    left: calc(8% - 15px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 5px 0 15px rgba(255, 255, 255, 0.03);
+}
+
+.jar-glass-right {
+    right: calc(8% - 15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset -5px 0 15px rgba(255, 255, 255, 0.03);
+}
+
+.jar-glass-bottom {
+    bottom: -5px;
+    left: calc(8% - 15px);
+    right: calc(8% - 15px);
+    height: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 12px 12px;
+}
+
+@media (max-width: 768px) {
+    .tech-jar-wrapper {
+        height: 400px;
+        margin-top: 2rem;
+    }
+}
+
+/* ============================================
+   Certification Cards
+   ============================================ */
+
+.certs-section {
+    background: var(--bg-secondary);
+}
+
+.cert-card {
+    position: relative;
+    display: block;
+    height: 100%;
+    min-height: 200px;
+    background: var(--bg-primary);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cert-card-inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-card-glow {
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6, #ec4899);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.cert-card:hover .cert-card-glow {
+    opacity: 0.15;
+}
+
+.cert-card::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-primary);
+    border-radius: 1.2rem;
+    z-index: 1;
+}
+
+.cert-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.cert-badge-icon {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--accent);
+    transition: all 0.4s ease;
+}
+
+.cert-card:hover .cert-badge-icon {
+    background: var(--accent);
+    color: white;
+    transform: rotate(10deg);
+}
+
+/* ============================================
+   Reduced Motion Preferences
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    /* Disable all transitions and animations */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Remove parallax effects */
+    .parallax-bg-image,
+    .parallax-hero-bg {
+        inset: 0 !important;
+        transform: none !important;
+    }
+    
+    /* Remove floating animations */
+    .animate-float,
+    .gradient-blob {
+        animation: none !important;
+    }
+    
+    /* Disable cursor effects */
+    .cursor-dot,
+    .cursor-ring {
+        display: none !important;
+    }
+    
+    /* Simplify hover effects */
+    .parallax-card:hover,
+    .tech-card:hover,
+    .skill-badge:hover {
+        transform: none !important;
+    }
+    
+    /* Make scroll indicator static */
+    .scroll-indicator-mouse::after {
+        animation: none !important;
+    }
+    
+    /* Static typed cursor */
+    .typed-cursor {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    
+    /* No magnetic effect */
+    .magnetic-btn {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+    .nav-parallax,
+    .loader-overlay,
+    .scroll-indicator,
+    .gradient-mesh,
+    .cursor-dot,
+    .cursor-ring {
+        display: none !important;
+    }
+    
+    .parallax-hero {
+        min-height: auto;
+        page-break-after: always;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}
+

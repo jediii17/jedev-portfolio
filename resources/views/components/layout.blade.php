@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="lenis lenis-smooth">
 
 <head>
     <meta charset="utf-8">
@@ -26,27 +26,26 @@
     <meta property="twitter:description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
     <meta property="twitter:image" content="{{ asset('images/profile.png') }}">
 
-    <!-- Fonts -->
+    <!-- Fonts - Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-page text-main antialiased transition-colors duration-300"
+<body class="bg-page text-main antialiased"
     x-data
     x-bind:class="$store.theme.isDark ? 'dark' : ''">
 
     <x-loader />
 
-    <div class="flex min-h-screen flex-col">
+    {{-- Main Content - No max-width constraint for parallax sections --}}
+    <div class="flex min-h-screen flex-col" id="smooth-wrapper">
         <x-nav />
 
-        <main class="flex-1 w-full max-w-[900px] mx-auto px-6 py-12 md:py-12 animate-fade-in">
+        <main class="flex-1" id="smooth-content">
             {{ $slot }}
         </main>
 
