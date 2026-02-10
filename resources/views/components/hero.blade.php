@@ -54,7 +54,7 @@
                     </div>
 
                     {{-- Static greeting --}}
-                    <h1 class="text-hero text-white hero-title-line">
+                    <h1 class="text-5xl font-bold text-white hero-title-line">
                         Hi, I'm
                     </h1>
 

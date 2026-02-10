@@ -53,14 +53,8 @@ export function initTechJar() {
         },
     });
 
-    // Jar walls (thicker for solid feel)
-    const wallThickness = 20;
-    const jarInset = Math.min(width * 0.08, 60);           // Side inset from container edge
-    const jarBottom = height - wallThickness / 2;
-    const jarLeft = jarInset;
-    const jarRight = width - jarInset;
-    const jarWidth = jarRight - jarLeft;
-
+    // Full-width walls
+    const wallThickness = 60;
     const wallOptions = {
         isStatic: true,
         render: {
@@ -71,9 +65,9 @@ export function initTechJar() {
         restitution: 0.2,
     };
 
-    const floor = Bodies.rectangle(width / 2, jarBottom, jarWidth + wallThickness, wallThickness, wallOptions);
-    const leftWall = Bodies.rectangle(jarLeft - wallThickness / 2, height / 2, wallThickness, height, wallOptions);
-    const rightWall = Bodies.rectangle(jarRight + wallThickness / 2, height / 2, wallThickness, height, wallOptions);
+    const floor = Bodies.rectangle(width / 2, height + wallThickness / 2, width + wallThickness, wallThickness, wallOptions);
+    const leftWall = Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2, wallOptions);
+    const rightWall = Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height * 2, wallOptions);
 
     Composite.add(engine.world, [floor, leftWall, rightWall]);
 
@@ -89,35 +83,61 @@ export function initTechJar() {
         return;
     }
 
-    // Build block bodies (4 per category)
+    // Emoji ideas
+    const emojis = ['🚀', '💻', '⚡', '🎨', '🛠️', '📱', '🌐', '🔥', '✨', '🧠', '⚙️', '🔋', '🌈', '👾', '🎮'];
+
+    // Build block bodies
     const blocks = [];
     const blockBodies = [];
-    const blockWidth = Math.min(120, (jarWidth - 40) / 4);
-    const blockHeight = 40;
 
+    // Config for larger, rounder blocks
+    const blockHeight = 52;
+    const radius = 16;
+
+    // Add tech blocks
     Object.entries(techData).forEach(([category, items]) => {
         const colors = CATEGORY_COLORS[category] || { bg: '#6b7280', text: '#ffffff' };
-        const limitedItems = items.slice(0, 4);
 
-        limitedItems.forEach((item) => {
-            const x = jarLeft + 30 + Math.random() * (jarWidth - 60);
-            const y = -50 - Math.random() * 400;  // Start above the jar
+        items.forEach((item) => {
+            const labelWidth = item.length * 9 + 40; // Approximate width based on text
+            const blockWidth = Math.max(100, Math.min(180, labelWidth));
+
+            const x = Math.random() * (width - 200) + 100;
+            const y = -100 - Math.random() * 500;
 
             const body = Bodies.rectangle(x, y, blockWidth, blockHeight, {
-                chamfer: { radius: 8 },
+                chamfer: { radius: radius },
                 render: { fillStyle: colors.bg },
                 friction: 0.5,
-                restitution: 0.3,
+                restitution: 0.4,
                 density: 0.002,
-                angle: (Math.random() - 0.5) * 0.5,
+                angle: (Math.random() - 0.5) * 1,
             });
 
-            blocks.push({ body, label: item, colors, category });
+            blocks.push({ type: 'text', body, label: item, colors });
             blockBodies.push(body);
         });
     });
 
-    // Mouse interaction (drag blocks)
+    // Add emoji blocks
+    for (let i = 0; i < 12; i++) {
+        const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        const emojiSize = 45;
+        const x = Math.random() * (width - 100) + 50;
+        const y = -200 - Math.random() * 800;
+
+        const body = Bodies.circle(x, y, emojiSize / 2, {
+            render: { fillStyle: 'rgba(255,255,255,0.1)' },
+            friction: 0.3,
+            restitution: 0.6,
+            density: 0.001,
+        });
+
+        blocks.push({ type: 'emoji', body, label: emoji, size: emojiSize });
+        blockBodies.push(body);
+    }
+
+    // Mouse interaction
     const mouse = Mouse.create(canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
@@ -127,18 +147,16 @@ export function initTechJar() {
         },
     });
 
-    // Keep mouse in sync with render
     render.mouse = mouse;
-
-    // Fix mouse offset for CSS-scaled canvas
     mouse.element.removeEventListener('mousewheel', mouse.mousewheel);
     mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel);
 
-    // Custom afterRender: draw labels on blocks
+    // Custom draw loop
     Events.on(render, 'afterRender', () => {
         const ctx = render.context;
 
-        blocks.forEach(({ body, label, colors }) => {
+        blocks.forEach((block) => {
+            const { body, type, label, colors, size } = block;
             const { x, y } = body.position;
             const angle = body.angle;
 
@@ -146,105 +164,69 @@ export function initTechJar() {
             ctx.translate(x, y);
             ctx.rotate(angle);
 
-            // Block dimensions
-            const w = blockWidth;
-            const h = blockHeight;
-            const r = 8;
+            if (type === 'text') {
+                const w = body.bounds.max.x - body.bounds.min.x;
+                const h = blockHeight;
 
-            // Rounded rect (extra layer for crispness if needed, but Matter already drew the body)
-            // But we redraw it to ensure our label is centered on our own rect
-            ctx.beginPath();
-            ctx.roundRect(-w / 2, -h / 2, w, h, r);
-            ctx.fillStyle = colors.bg;
-            ctx.fill();
+                // Redraw rounded rect for crispness
+                ctx.beginPath();
+                ctx.roundRect(-w / 2, -h / 2, w, h, radius);
+                ctx.fillStyle = colors.bg;
+                ctx.fill();
 
-            // Subtle border
-            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
+                // Glass shine
+                const gradient = ctx.createLinearGradient(0, -h / 2, 0, h / 2);
+                gradient.addColorStop(0, 'rgba(255,255,255,0.15)');
+                gradient.addColorStop(0.5, 'rgba(255,255,255,0)');
+                ctx.fillStyle = gradient;
+                ctx.fill();
 
-            // Text label
-            ctx.fillStyle = '#ffffff';
-            ctx.font = `600 ${Math.max(11, Math.min(14, blockWidth / (label.length * 0.8)))}px 'Inter', sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
 
-            // Slight shadow for depth
-            ctx.shadowColor = 'rgba(0,0,0,0.2)';
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetY = 1;
-
-            ctx.fillText(label, 0, 0);
+                // Text
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold 14px 'Inter', sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, 0, 1);
+            } else if (type === 'emoji') {
+                ctx.font = `${size}px serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, 0, 0);
+            }
 
             ctx.restore();
         });
     });
 
-    // Draw jar outline (glass effect) 
-    Events.on(render, 'afterRender', () => {
-        const ctx = render.context;
-        const pixelRatio = render.options.pixelRatio || 1;
-        const jl = jarLeft * pixelRatio;
-        const jr = jarRight * pixelRatio;
-        const jb = (jarBottom - wallThickness / 2) * pixelRatio;
-        const jt = 0;
-
-        ctx.save();
-        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-        ctx.lineWidth = 2 * pixelRatio;
-        ctx.lineCap = 'round';
-
-        // Left wall
-        ctx.beginPath();
-        ctx.moveTo(jl, jt);
-        ctx.lineTo(jl, jb);
-        ctx.stroke();
-
-        // Right wall
-        ctx.beginPath();
-        ctx.moveTo(jr, jt);
-        ctx.lineTo(jr, jb);
-        ctx.stroke();
-
-        // Bottom
-        ctx.beginPath();
-        ctx.moveTo(jl, jb);
-        ctx.lineTo(jr, jb);
-        ctx.stroke();
-
-        ctx.restore();
-    });
-
-    // Start renderer (but don't drop blocks yet)
+    // Start
     Render.run(render);
     runner = Runner.create();
 
-    // ScrollTrigger: drop blocks when section is visible
     ScrollTrigger.create({
         trigger: container,
-        start: 'top 70%',
+        start: 'top 75%',
         once: true,
         onEnter: () => {
             if (hasStarted) return;
             hasStarted = true;
-
             Runner.run(runner, engine);
 
-            // Stagger add blocks with delays
             blockBodies.forEach((body, i) => {
                 setTimeout(() => {
                     Composite.add(engine.world, body);
-                }, i * 80);
+                }, i * 60);
             });
 
-            // Add mouse constraint after blocks start falling
             setTimeout(() => {
                 Composite.add(engine.world, mouseConstraint);
-            }, blockBodies.length * 80 + 500);
+            }, blockBodies.length * 60 + 500);
         },
     });
 
-    // Handle resize
     const handleResize = () => {
         const newWidth = container.clientWidth;
         const newHeight = container.clientHeight;
@@ -254,13 +236,13 @@ export function initTechJar() {
         render.options.height = newHeight;
         render.canvas.width = newWidth * (render.options.pixelRatio || 1);
         render.canvas.height = newHeight * (render.options.pixelRatio || 1);
+
+        // Update floor position
+        Body.setPosition(floor, { x: newWidth / 2, y: newHeight + wallThickness / 2 });
+        Body.setPosition(rightWall, { x: newWidth + wallThickness / 2, y: newHeight / 2 });
     };
 
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(handleResize, 300);
-    });
+    window.addEventListener('resize', handleResize);
 }
 
 export default { initTechJar };

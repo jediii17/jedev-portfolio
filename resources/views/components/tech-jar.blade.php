@@ -1,7 +1,7 @@
 @props(['skills'])
 
 {{-- Tech Stack Jar Section --}}
-<section id="tech-stack" class="parallax-section tech-jar-section">
+<section id="tech-stack" class="parallax-section border border-white/25 shadow-lg tech-jar-section mx-4 md:mx-10 rounded-3xl overflow-hidden bg-surface/50 dark:bg-surface/20">
     <div class="parallax-section-content">
         <div class="section-content">
             {{-- Section Header --}}
@@ -10,13 +10,10 @@
                 <h2 class="text-display text-main text-reveal">
                     Tech <span class="text-accent">Stack</span>
                 </h2>
-                <p class="text-body-lg text-muted max-w-lg mx-auto mt-4">
-                    Scroll down and watch the blocks fall — grab and throw them around!
-                </p>
             </div>
 
             {{-- Category Legend --}}
-            <div class="flex flex-wrap justify-center gap-3 mb-6">
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
                 @php
                 $categoryColors = [
                 'Frontend' => '#3b82f6',
@@ -27,9 +24,9 @@
                 ];
                 @endphp
                 @foreach($categoryColors as $cat => $color)
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/60 backdrop-blur-sm border border-white/5">
-                    <span class="w-3 h-3 rounded-sm" @style(['background-color'=> $color])></span>
-                    <span class="text-xs font-medium text-muted">{{ $cat }}</span>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/40 backdrop-blur-sm border border-white/5">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full" style="background-color: {{ $color }}; box-shadow: 0 0 8px {{ $color }}40;"></span>
+                    <span class="text-[10px] font-bold text-muted uppercase tracking-widest">{{ $cat }}</span>
                 </div>
                 @endforeach
             </div>
@@ -37,11 +34,6 @@
             {{-- Jar Container --}}
             <div id="tech-jar-container" class="tech-jar-wrapper">
                 <canvas id="tech-jar-canvas"></canvas>
-
-                {{-- Glass jar decorative elements --}}
-                <div class="jar-glass-left"></div>
-                <div class="jar-glass-right"></div>
-                <div class="jar-glass-bottom"></div>
             </div>
 
             {{-- Hidden data for JS --}}

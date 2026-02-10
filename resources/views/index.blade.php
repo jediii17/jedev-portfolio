@@ -79,9 +79,6 @@
                         @endforeach
                     </div>
                 </div>
-
-                {{-- Tech Stack Jar & Certifications moved to separate sections --}}
-
             </div>
         </div>
     </section>
@@ -209,10 +206,10 @@
                 <div class="mb-12">
                     <span class="text-accent text-sm font-semibold uppercase tracking-widest mb-6 block">Get In Touch</span>
                     <h2 class="text-display text-main mb-6 text-reveal">
-                        Let's Build Something <span class="text-accent">Amazing</span>
+                        Let's Build <span class="text-accent">Amazing</span>
                     </h2>
                     <p class="text-body-lg text-muted max-w-2xl mx-auto">
-                        I'm currently available for freelance work and full-time opportunities.
+                        I'm currently available for full-time opportunities.
                         Whether you have a project in mind or just want to chat, I'd love to hear from you.
                     </p>
                 </div>
