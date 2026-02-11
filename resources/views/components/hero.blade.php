@@ -56,6 +56,8 @@
                             ? '{{ Vite::asset('resources/js/assets/images/jed.png') }}'
                             : '{{ Vite::asset('resources/js/assets/images/profile.png') }}'"
                         alt="Jedidia Lemuel B. Cruz"
+                        loading="eager"
+                        fetchpriority="high"
                         class="w-full h-full object-cover transition-all duration-500"
                         :class="hovered ? 'scale-105' : 'scale-100'">
                 </div>
@@ -73,7 +75,7 @@
                     </h1>
 
                     {{-- Dynamic role text below - reserves space for longest phrase --}}
-                    <div class="text-display text-accent" style="min-height: 1.2em; position: relative;">
+                    <div class="text-display text-display-typed text-accent" style="min-height: 1.2em; position: relative;">
                         {{-- Hidden text to reserve width for longest phrase --}}
                         <span class="invisible" aria-hidden="true">Full-Stack Developer</span>
                         {{-- Typed text overlaid on top --}}

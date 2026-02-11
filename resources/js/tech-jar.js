@@ -11,11 +11,10 @@ const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint, Event
 
 // Category color map
 const CATEGORY_COLORS = {
-    'Frontend': { bg: '#3b82f6', text: '#ffffff' },       // blue
-    'Backend': { bg: '#22c55e', text: '#ffffff' },         // green
-    'Frameworks': { bg: '#a855f7', text: '#ffffff' },      // purple
-    'DevOps & Cloud': { bg: '#f97316', text: '#ffffff' },  // orange
-    'Other': { bg: '#ec4899', text: '#ffffff' },           // pink
+    'Frontend': { bg: '#3b82f6', text: '#ffffff' },              // blue
+    'Backend': { bg: '#22c55e', text: '#ffffff' },               // green
+    'AI & Machine Learning': { bg: '#a855f7', text: '#ffffff' }, // purple
+    'DevOps & Tools': { bg: '#f97316', text: '#ffffff' },        // orange
 };
 
 let engine, render, runner;

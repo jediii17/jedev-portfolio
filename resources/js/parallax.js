@@ -1139,17 +1139,17 @@ function initThemeSwitchAnimation() {
 
         // Listen for clicks with elastic animation
         toggle.addEventListener('click', () => {
-            if (isAnimating) return;
-            isAnimating = true;
+            // Get state AFTER Alpine toggled it
+            const isDark = document.documentElement.classList.contains('dark');
+            const targetX = isDark ? travelDistance : 0;
 
-            // Get state BEFORE the toggle happens (Alpine toggles it immediately)
-            const wasDark = !document.documentElement.classList.contains('dark');
-            const targetX = wasDark ? 0 : travelDistance;
+            // Kill any ongoing animations on these elements to prevent conflicts
+            gsap.killTweensOf([knob, sunIcon, moonIcon, sunRays]);
 
             // Create elastic switch animation timeline
             const tl = gsap.timeline({
+                defaults: { overwrite: 'auto' },
                 onComplete: () => {
-                    isAnimating = false;
                     // Sync other toggles positions if they exist
                     toggles.forEach(other => {
                         if (other !== toggle) {
@@ -1157,39 +1157,30 @@ function initThemeSwitchAnimation() {
                             if (otherKnob) gsap.set(otherKnob, { x: targetX });
                         }
                     });
+
+                    // CRITICAL: Clear inline styles for icons and rays so CSS classes take over 
+                    // This prevents "stuck" states from JS-applied inline styles
+                    gsap.set([sunIcon, moonIcon, sunRays], { clearProps: 'all' });
                 }
             });
 
-            // 1. Squish on press
+            // 1. Squish and move with elastic bounce
             tl.to(knob, {
-                scaleY: 0.8,
-                scaleX: 1.15,
-                duration: 0.08,
+                scaleX: 1.4,
+                scaleY: 0.6,
+                duration: 0.15,
                 ease: 'power2.in'
             })
-                // 2. Stretch while moving
-                .to(knob, {
-                    scaleX: 1.5,
-                    scaleY: 0.65,
-                    duration: 0.12,
-                    ease: 'power2.in'
-                })
-                // 3. Slide to target with elastic bounce
                 .to(knob, {
                     x: targetX,
-                    duration: 0.6,
-                    ease: 'elastic.out(1, 0.4)'
-                }, '-=0.08')
-                // 4. Return to normal shape with elastic overshoot
-                .to(knob, {
                     scaleX: 1,
                     scaleY: 1,
-                    duration: 0.7,
-                    ease: 'elastic.out(1.2, 0.35)'
-                }, '-=0.5');
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.5)'
+                }, '-=0.05');
 
-            // Animate icons
-            if (wasDark) {
+            // 2. Animate icons
+            if (!isDark) {
                 // Going to light mode - show moon, hide sun
                 tl.to(sunIcon, {
                     opacity: 0,
@@ -1197,15 +1188,14 @@ function initThemeSwitchAnimation() {
                     scale: 0.5,
                     duration: 0.3,
                     ease: 'power2.in'
-                }, 0.1);
+                }, 0);
                 tl.to(moonIcon, {
                     opacity: 1,
                     rotation: 0,
                     scale: 1,
                     duration: 0.5,
                     ease: 'elastic.out(1, 0.5)'
-                }, 0.2);
-                // Sun rays shrink
+                }, 0.1);
                 tl.to(sunRays, {
                     scale: 0,
                     opacity: 0,
@@ -1221,24 +1211,23 @@ function initThemeSwitchAnimation() {
                     scale: 0.5,
                     duration: 0.3,
                     ease: 'power2.in'
-                }, 0.1);
+                }, 0);
                 tl.to(sunIcon, {
                     opacity: 1,
                     rotation: 0,
                     scale: 1,
                     duration: 0.5,
                     ease: 'elastic.out(1, 0.5)'
-                }, 0.2);
-                // Sun rays burst out
+                }, 0.1);
                 tl.fromTo(sunRays,
                     { scale: 0, opacity: 0 },
                     {
                         scale: 1,
                         opacity: 1,
                         stagger: 0.03,
-                        duration: 0.5,
+                        duration: 0.6,
                         ease: 'elastic.out(1.2, 0.5)'
-                    }, 0.3);
+                    }, 0.15);
             }
         });
 

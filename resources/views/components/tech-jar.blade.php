@@ -18,9 +18,8 @@
                 $categoryColors = [
                 'Frontend' => '#3b82f6',
                 'Backend' => '#22c55e',
-                'Frameworks' => '#a855f7',
-                'DevOps & Cloud' => '#f97316',
-                'Other' => '#ec4899',
+                'AI & Machine Learning' => '#a855f7',
+                'DevOps & Tools' => '#f97316',
                 ];
                 @endphp
                 @foreach($categoryColors as $cat => $color)

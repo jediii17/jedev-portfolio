@@ -19,6 +19,8 @@
             <div class="col-image-wrap">
                 <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070"
                     alt="Featured Project"
+                    loading="lazy"
+                    decoding="async"
                     class="w-full h-full object-cover">
             </div>
         </div>
@@ -238,7 +240,7 @@
                 {{-- Section Header --}}
                 <div class="mb-12">
                     <span class="text-accent text-sm font-semibold uppercase tracking-widest mb-6 block">Get In Touch</span>
-                    <h2 class="text-7xl font-bold text-main py-6 text-reveal">
+                    <h2 class="text-4xl md:text-7xl font-bold text-main py-6 text-reveal">
                         Let's Build <span class="text-accent">Amazing</span>
                     </h2>
                     <p class="text-body-lg text-muted max-w-2xl mx-auto">

@@ -57,7 +57,7 @@
         </div>
 
         {{-- Mobile Controls --}}
-        <div class="flex items-center gap-3 md:hidden">
+        <div class="flex items-center gap-3 md:hidden relative z-10">
             {{-- Theme Toggle (separated) --}}
             <x-theme-toggle />
 
@@ -100,7 +100,7 @@
         x-transition:leave-start="curtain-leave-from"
         x-transition:leave-end="curtain-leave-to"
         @keydown.escape.window="mobileMenuOpen = false"
-        class="md:hidden fixed inset-0 top-16 bg-page/98 backdrop-blur-2xl z-200 origin-top overflow-hidden"
+        class="md:hidden fixed inset-0 top-16 bg-page/98 backdrop-blur-2xl z-300 origin-top overflow-hidden"
         data-lenis-prevent
         role="dialog"
         aria-modal="true"

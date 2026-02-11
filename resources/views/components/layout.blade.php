@@ -11,6 +11,8 @@
 
     <title>{{ $title ?? 'Jedidia Lemuel B. Cruz | Software Engineer' }}</title>
     <meta name="description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -26,9 +28,15 @@
     <meta property="twitter:description" content="{{ $description ?? 'Portfolio of Jedidia Lemuel B. Cruz, a Software Engineer specializing in Laravel, Vue.js, and backend development.' }}">
     <meta property="twitter:image" content="{{ asset('images/profile.png') }}">
 
-    <!-- Fonts - Modern Typography -->
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+
+    <!-- Fonts - Modern Typography (preconnect + swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles & Scripts -->

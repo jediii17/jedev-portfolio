@@ -111,13 +111,17 @@ html.lenis, html.lenis body {
 
 .text-display {
     font-size: clamp(2.5rem, 8vw, 6rem);
-    line-height: 1;
+    line-height: 1.15;
     letter-spacing: -0.03em;
     font-weight: 600;
-    height: 1.25em; /* Fixed height to prevent layout shift */
     position: relative;
+}
+
+/* Only for the hero typed text — prevents layout shift during typing */
+.text-display-typed {
+    height: 1.25em;
     overflow: hidden;
-    white-space: nowrap; /* Prevent wrapping jumps */
+    white-space: nowrap;
 }
 
 .text-headline {
@@ -150,7 +154,8 @@ html.lenis, html.lenis body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    /* scroll-snap removed for smooth parallax */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100vh;
 }
 
 /* Split-Screen Layouts */
@@ -381,7 +386,7 @@ html.lenis, html.lenis body {
 
 /* Stagger animation containers */
 .stagger-container .stagger-item {
-    will-change: transform, opacity;
+    /* will-change applied dynamically by GSAP */
 }
 
 /* Word wrap for text animations */

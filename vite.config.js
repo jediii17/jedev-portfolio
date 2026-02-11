@@ -16,4 +16,16 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
+    build: {
+        cssMinify: 'lightningcss',
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-physics': ['matter-js'],
+                    'vendor-animation': ['gsap', 'gsap/ScrollTrigger', 'gsap/ScrollToPlugin', 'gsap/SplitText', 'lenis'],
+                    'vendor-alpine': ['alpinejs'],
+                },
+            },
+        },
+    },
 });

@@ -130,7 +130,7 @@
     /* Sun rays animation */
     .sun-rays line {
         transform-origin: center;
-        transition: transform 0.3s ease, opacity 0.3s ease;
+        /* Remove CSS transition here as it conflicts with JS animation and causes "stuck" rays */
     }
 
     .dark .sun-rays line {

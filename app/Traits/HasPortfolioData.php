@@ -10,11 +10,10 @@ trait HasPortfolioData
     public function getSkillsData(): array
     {
         return [
-            'Frontend' => ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Matter.js', 'GSAP', 'Lenis', 'Three.js', 'WebGL', 'Framer Motion'],
-            'Backend' => ['Node.js', 'Python', 'PHP', 'Laravel', 'PostgreSQL', 'MySQL', 'SQL Server'],
-            'Frameworks' => ['Laravel', 'Vue.js', 'Inertia.js', 'Livewire', 'Express.js', 'Flask'],
-            'DevOps & Cloud' => ['Azure Data Studio', 'Docker', 'GitHub Actions', 'Google Cloud', 'Firebase'],
-            'Other' => ['RESTful APIs', 'WebSockets', 'Spatie Packages', 'MVC Architecture', 'OOP', 'YOLOv8', 'OpenCV', 'OpenAI']
+            'Frontend' => ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Matter.js', 'GSAP', 'Lenis', 'Three.js', 'WebGL', 'Framer Motion', 'Vite', 'WebSockets'],
+            'Backend' => ['PHP', 'Laravel', 'Node.js', 'Python', 'Flask', 'PostgreSQL', 'MySQL', 'SQL Server', 'RESTful APIs', 'JWT', 'OAuth', 'Spatie Packages'],
+            'AI & Machine Learning' => ['OpenAI', 'OpenCV', 'Roboflow', 'PyTorch', 'YOLOv8', 'Google Colab'],
+            'DevOps & Tools' => ['Docker', 'GitHub', 'Gitlab', 'Google Cloud', 'Firebase', 'VS Code', 'Azure Data Studio', 'SourceTree'],
         ];
     }
 
