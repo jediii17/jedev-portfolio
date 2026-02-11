@@ -66,7 +66,7 @@ trait HasPortfolioData
                 'title' => 'AI Assistance Mobile App (Backend Server)',
                 'year' => '2025 - Present',
                 'description' => 'A dating app backend that uses AI to generate personalized pickup lines and facilitate conversations. Built with Node.js, Express, and Firebase, featuring Google Play subscription integration.',
-                'tech' => ['Node.js', 'Express', 'Firebase', 'OpenAI', 'Google Cloud Pub/Sub', 'Google Play Console'],
+                'tech' => ['Node.js', 'Express', 'Firebase', 'OpenAI', 'Google Cloud Pub/Sub', 'Google Play Console', 'Postman', 'Axios', 'RESTful API', 'Middleware'],
                 'contribution' => [
                     'Created backend server and APIs for the mobile app.',
                     'Integrated OpenAI for AI-driven features.',
@@ -78,7 +78,7 @@ trait HasPortfolioData
                 'title' => 'Employee Portal Redevelopment',
                 'year' => '2025',
                 'description' => 'Full system redevelopment migrating a legacy ColdFusion employee portal to Laravel 12. Improved performance, security, and maintainability.',
-                'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'SQL Server', 'Docker', 'Spatie Multitenancy'],
+                'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'SQL Server', 'Docker', 'Spatie Multitenancy', 'Gitlab', 'SourceTree', 'Azure Data Studio', 'Dynamic Link Library (DLL)'],
                 'contribution' => [
                     'Replicated legacy ColdFusion encryption logic for seamless transition.',
                     'Implemented Spatie Laravel Multitenancy for database switching.',
@@ -90,11 +90,13 @@ trait HasPortfolioData
                 'title' => 'Desktop to Web Tellering System Migration',
                 'year' => '2025',
                 'description' => 'Transformed a desktop tellering system into a modern web application with a custom CMS using Laravel 12 and Vue 3.',
-                'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'WebSockets (Reverb)'],
+                'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'WebSockets (Reverb)', 'Gitlab', 'SourceTree', 'RESTful API'],
                 'contribution' => [
                     'Developed the Content Management System (CMS).',
+                    'Created a reusable component for the Web Tellering POC project.',
                     'Implemented officer-override features using Laravel Reverb (WebSockets).',
                     'Created Check Deposit module and reusable POC components.',
+                    'Implemented a mock API call using the REST API.',
                     'Resolved complex environment issues (419 page expired during concurrent execution).'
                 ]
             ],
@@ -102,7 +104,7 @@ trait HasPortfolioData
                 'title' => 'Monitoring Work Order System',
                 'year' => '2025',
                 'description' => 'Web-based system for tracking work orders, time charges, leave management, and manpower allocation across projects.',
-                'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL'],
+                'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'Gitlab', 'SourceTree'],
                 'contribution' => [
                     'Designed database schema and implemented Eloquent ORM relationships.',
                     'Developed CRUD functionalities for project modules.',
@@ -114,18 +116,19 @@ trait HasPortfolioData
                 'title' => 'Content Management System',
                 'year' => '2024',
                 'description' => 'Centralized administration system for employee records, user roles, and audit trails to ensure meaningful accountability.',
-                'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL'],
+                'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'Gitlab', 'SourceTree'],
                 'contribution' => [
                     'Designed comprehensive database schema and established Eloquent ORM.',
-                    'Implemented granular role-based security with Spatie.',
-                    'Developed secure CRUD modules for employee data.'
+                    'Integrated Spatie packages to implement roles and permissions-based security.',
+                    'Designed database schema and implemented Eloquent ORM models for efficient data access.',
+                    'Implemented the CRUD functionality on the projects.'
                 ]
             ],
             [
                 'title' => 'Attendance Monitoring System with Face Recognition',
                 'year' => '2025',
                 'description' => 'IoT-based attendance system using face recognition to automate logging and send SMS/email notifications to guardians.',
-                'tech' => ['Python', 'Tkinter', 'OpenCV', 'SQLite', 'Raspberry Pi', 'GSM Module'],
+                'tech' => ['Python', 'Tkinter', 'OpenCV', 'SQLite', 'Raspberry Pi', 'GSM Module', 'Gitlab', 'SourceTree'],
                 'contribution' => [
                     'Designed GUI for attendance logs using Tkinter.',
                     'Enhanced notification system (SMS/Email).',
@@ -136,7 +139,7 @@ trait HasPortfolioData
                 'title' => 'FireQuake Detection Prototype (Capstone)',
                 'year' => '2023 - 2024',
                 'description' => 'Award-winning "Best in Thesis" prototype detecting fire via computer vision and earthquakes via seismic sensors.',
-                'tech' => ['Python', 'YOLOv8', 'OpenCV', 'Raspberry Pi', 'Flask', 'Roboflow'],
+                'tech' => ['Python', 'YOLOv8', 'OpenCV', 'Raspberry Pi', 'Flask', 'Roboflow', 'Github', 'Postman'],
                 'contribution' => [
                     'Trained YOLOv8 models for fire/smoke detection.',
                     'Developed web dashboard for real-time monitoring and logging.',
@@ -147,7 +150,7 @@ trait HasPortfolioData
                 'title' => 'Supplier Management System',
                 'year' => '2024',
                 'description' => 'System facilitating efficient transaction management between company and suppliers for Bill of Materials (BOM).',
-                'tech' => ['PHP', 'Laravel', 'Livewire', 'Bootstrap', 'MySQL'],
+                'tech' => ['PHP', 'Laravel', 'Livewire', 'Bootstrap', 'MySQL', 'Github'],
                 'contribution' => [
                     'Designed overall system UI.',
                     'Implemented supplier dashboard and document uploads.',
