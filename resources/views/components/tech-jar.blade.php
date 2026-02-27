@@ -18,6 +18,7 @@
                 $categoryColors = [
                 'Frontend' => '#3b82f6',
                 'Backend' => '#22c55e',
+                'Mobile Dev' => '#ffc107',
                 'AI & Machine Learning' => '#a855f7',
                 'DevOps & Tools' => '#f97316',
                 ];

@@ -44,98 +44,82 @@
                     <div class="project-detail-glow"></div>
 
                     <div class="project-detail-inner">
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
-                            {{-- Project Info --}}
-                            <div class="lg:col-span-8">
-                                <div class="flex flex-wrap items-center gap-3 mb-4">
-                                    {{-- Year badge --}}
-                                    @if(isset($project['year']))
-                                    <span class="project-year-badge">
-                                        {{ $project['year'] }}
-                                    </span>
-                                    @endif
-
-                                    {{-- Category --}}
-                                    @if(isset($project['category']))
-                                    <span class="text-xs font-medium text-accent uppercase tracking-wider">
-                                        {{ $project['category'] }}
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-main group-hover:text-accent transition-colors duration-300 mb-3">
+                        {{-- Header Section --}}
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-10 border-b border-white/5">
+                            <div class="space-y-2">
+                                <h2 class="text-3xl md:text-5xl font-bold text-main tracking-tight group-hover:text-accent transition-colors duration-300">
                                     {{ $project['title'] }}
                                 </h2>
-
-                                <p class="text-sm md:text-base text-muted leading-relaxed mb-6">
-                                    {{ $project['description'] }}
-                                </p>
-
-                                @if(isset($project['contribution']))
-                                <div class="space-y-3">
-                                    <h3 class="text-xs font-bold text-main uppercase tracking-widest flex items-center gap-2">
-                                        <span class="w-5 h-px bg-accent"></span>
-                                        Key Contributions
-                                    </h3>
-                                    <ul class="space-y-2">
-                                        @foreach($project['contribution'] as $contribution)
-                                        <li class="flex items-start gap-3 text-sm text-muted">
-                                            <svg class="w-4 h-4 text-accent mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                            <span>{{ $contribution }}</span>
-                                        </li>
-                                        @endforeach
-                                    </ul>
+                                <div class="flex items-center gap-3">
+                                    @if(isset($project['category']))
+                                    <span class="text-accent text-xs font-bold uppercase tracking-widest">{{ $project['category'] }}</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+                                    @endif
+                                    @if(isset($project['year']))
+                                    <span class="text-muted text-xs font-medium">{{ $project['year'] }}</span>
+                                    @endif
                                 </div>
-                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Content Grid --}}
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            {{-- Visual Side --}}
+                            <div class="lg:col-span-5">
+                                <div class="group/img relative overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl">
+                                    @php
+                                    $placeholderImage = 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop';
+                                    $imagePath = $project['image'] ?? $placeholderImage;
+                                    $projectImage = \Illuminate\Support\Str::startsWith($imagePath, ['http://', 'https://'])
+                                    ? $imagePath
+                                    : asset('images/projects/' . $imagePath);
+                                    @endphp
+                                    <img src="{{ $projectImage }}"
+                                        alt="{{ $project['title'] }}"
+                                        class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-500"></div>
+                                </div>
+
+                                {{-- Tech Stack Tags --}}
+                                <div class="mt-8">
+                                    <h3 class="text-xs font-bold text-main uppercase tracking-widest mb-4 opacity-50">Built With</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($project['tech'] as $tech)
+                                        <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 text-[10px] font-bold text-muted uppercase tracking-wider group-hover:border-accent/20 group-hover:text-accent transition-all duration-300">
+                                            {{ $tech }}
+                                        </span>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
-                            {{-- Tech Stack & Links --}}
-                            <div class="lg:col-span-4">
-                                <div class="lg:border-l lg:border-white/5 lg:pl-8 space-y-8">
-                                    {{-- Technologies --}}
-                                    <div>
-                                        <h3 class="text-xs font-bold text-main uppercase tracking-widest mb-4 flex items-center gap-2">
-                                            <span class="w-5 h-px bg-accent"></span>
-                                            Tech Stack
-                                        </h3>
-                                        <div class="flex flex-wrap gap-2">
-                                            @foreach($project['tech'] as $tech)
-                                            <span class="project-tech-tag">
-                                                {{ $tech }}
-                                            </span>
-                                            @endforeach
-                                        </div>
+                            {{-- Detail Side --}}
+                            <div class="lg:col-span-7 flex flex-col">
+                                <div class="space-y-10">
+                                    {{-- Description --}}
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="text-lg md:text-xl text-muted leading-relaxed font-light">
+                                            {{ $project['description'] }}
+                                        </p>
                                     </div>
 
-                                    {{-- Links --}}
-                                    <div>
-                                        <h3 class="text-xs font-bold text-main uppercase tracking-widest mb-4 flex items-center gap-2">
-                                            <span class="w-5 h-px bg-accent"></span>
-                                            Links
+                                    {{-- Contributions --}}
+                                    @if(isset($project['contribution']))
+                                    <div class="space-y-6 pt-6 border-t border-white/5">
+                                        <h3 class="text-xs font-bold text-main uppercase tracking-widest flex items-center gap-3">
+                                            <span class="w-8 h-px bg-accent"></span>
+                                            Core Impact & Responsibility
                                         </h3>
-                                        <div class="space-y-2">
-                                            <a href="#" class="project-link-btn group/link">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                                </svg>
-                                                <span>Live Demo</span>
-                                                <svg class="w-3 h-3 ml-auto opacity-0 group-hover/link:opacity-100 group-hover/link:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                </svg>
-                                            </a>
-                                            <a href="#" class="project-link-btn group/link">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.943 0-1.091.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.597 1.028 2.688 0 3.848-2.339 4.685-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                                                </svg>
-                                                <span>Repository</span>
-                                                <svg class="w-3 h-3 ml-auto opacity-0 group-hover/link:opacity-100 group-hover/link:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                </svg>
-                                            </a>
-                                        </div>
+                                        <ul class="grid grid-cols-1 gap-4">
+                                            @foreach($project['contribution'] as $contribution)
+                                            <li class="flex items-start gap-4 text-sm text-muted/80 group/item">
+                                                <span class="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)] group-hover/item:scale-150 transition-transform duration-300"></span>
+                                                <span class="leading-relaxed">{{ $contribution }}</span>
+                                            </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

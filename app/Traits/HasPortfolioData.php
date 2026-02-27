@@ -10,10 +10,11 @@ trait HasPortfolioData
     public function getSkillsData(): array
     {
         return [
-            'Frontend' => ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Matter.js', 'GSAP', 'Lenis', 'Three.js', 'WebGL', 'Framer Motion', 'Vite', 'WebSockets'],
-            'Backend' => ['PHP', 'Laravel', 'Node.js', 'Python', 'Flask', 'PostgreSQL', 'MySQL', 'SQL Server', 'RESTful APIs', 'JWT', 'OAuth', 'Spatie Packages'],
+            'Frontend' => ['JavaScript', 'Vue 3', 'Inertia.js', 'TypeScript', 'Tailwind CSS', 'Next.js', 'React', 'Framer Motion', 'Alpine.js', 'GSAP', 'Lucide React', 'Vite'],
+            'Backend' => ['Laravel 12', 'PHP', 'Supabase', 'Node.js', 'PostgreSQL', 'SQL Server', 'MySQL', 'Spatie Packages', 'RESTful APIs', 'JWT', 'OAuth'],
+            'Mobile Dev' => ['React Native', 'Expo', 'Zustand', 'React Query', 'Reanimated', 'React Native SVG', 'Expo Audio', 'Google Mobile Ads'],
             'AI & Machine Learning' => ['OpenAI', 'OpenCV', 'Roboflow', 'PyTorch', 'YOLOv8', 'Google Colab'],
-            'DevOps & Tools' => ['Docker', 'GitHub', 'Gitlab', 'Google Cloud', 'Firebase', 'VS Code', 'Azure Data Studio', 'SourceTree'],
+            'DevOps & Tools' => ['Docker', 'Gitlab', 'GitHub', 'Azure Data Studio', 'SourceTree', 'Firebase', 'Google Cloud', 'VS Code'],
         ];
     }
 
@@ -63,8 +64,37 @@ trait HasPortfolioData
     {
         return [
             [
+                'category' => 'Mobile Game',
+                'title' => 'MATH Stickman Challenge',
+                'year' => 'Jan 2026 - Present',
+                'image' => 'math-challenge.png',
+                'description' => 'An educational mobile game designed to help young learners practice basic math skills such as addition, subtraction, multiplication, division and fractions. The game uses a visual feedback system where a stickman character loses body parts after incorrect answers, encouraging students to answer carefully. Currently under development and not yet publish in Google Play Store.',
+                'tech' => [
+                    'Expo React Native',
+                    'TypeScript',
+                    'React Native Reanimated',
+                    'React Native SVG',
+                    'Supabase',
+                    'Zustand',
+                    'React Query',
+                    'Expo Audio',
+                    'Google Mobile Ads'
+                ],
+                'contribution' => [
+                    'Built a complex SVG character system with Reanimated, featuring dynamic expressions, body animations, and a procedurally generated seasonal map that changes every 25 levels.',
+                    'Created a Dressing Room shop with hundreds of avatar combinations, fully synced with Supabase for persistent storage.',
+                    'Developed a procedural Math Engine with three difficulty tiers to ensure a smooth learning curve.',
+                    'Implemented strategic power-ups like Time Freeze, Healing Potion, and Hint Fireflies to improve retention.',
+                    'Integrated real-time leaderboards and cross-device sessions using Supabase PostgreSQL and Auth.',
+                    'Synced haptics and layered audio (BGM/SFX) with key gameplay moments for a more immersive feel.',
+                    'Optimized SVG rendering to maintain smooth 60FPS performance on Android devices.'
+                ]
+            ],
+            [
+                'category' => 'Mobile App',
                 'title' => 'AI Assistance Mobile App (Backend Server)',
-                'year' => '2025 - Present',
+                'year' => 'Dec 2025 - Jan 2026',
+                'image' => 'ai-app.png',
                 'description' => 'A dating app backend that uses AI to generate personalized pickup lines and facilitate conversations. Built with Node.js, Express, and Firebase, featuring Google Play subscription integration.',
                 'tech' => ['Node.js', 'Express', 'Firebase', 'OpenAI', 'Google Cloud Pub/Sub', 'Google Play Console', 'Postman', 'Axios', 'RESTful API', 'Middleware'],
                 'contribution' => [
@@ -77,6 +107,7 @@ trait HasPortfolioData
             [
                 'title' => 'Employee Portal Redevelopment',
                 'year' => '2025',
+                'image' => 'employee-portal.png',
                 'description' => 'Full system redevelopment migrating a legacy ColdFusion employee portal to Laravel 12. Improved performance, security, and maintainability.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'SQL Server', 'Docker', 'Spatie Multitenancy', 'Gitlab', 'SourceTree', 'Azure Data Studio', 'Dynamic Link Library (DLL)'],
                 'contribution' => [
@@ -89,6 +120,7 @@ trait HasPortfolioData
             [
                 'title' => 'Desktop to Web Tellering System Migration',
                 'year' => '2025',
+                'image' => 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070',
                 'description' => 'Transformed a desktop tellering system into a modern web application with a custom CMS using Laravel 12 and Vue 3.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'WebSockets (Reverb)', 'Gitlab', 'SourceTree', 'RESTful API'],
                 'contribution' => [

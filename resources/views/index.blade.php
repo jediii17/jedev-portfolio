@@ -44,16 +44,15 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
-                        @php
-                        $projectPhotos = [
-                        'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop',
-                        'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop',
-                        'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2031&auto=format&fit=crop',
-                        'https://images.unsplash.com/photo-1558494949-ef010cbdcc48?q=80&w=2074&auto=format&fit=crop'
-                        ];
-                        @endphp
                         @foreach(array_slice($projects, 0, 4) as $index => $project)
-                        <div class="project-card stagger-item group cursor-pointer" style="background-image: url('{{ $projectPhotos[$index] ?? $projectPhotos[0] }}'); background-size: cover; background-position: center;">
+                        @php
+                        $placeholderImage = 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop';
+                        $imagePath = $project['image'] ?? $placeholderImage;
+                        $projectImage = Str::startsWith($imagePath, ['http://', 'https://'])
+                        ? $imagePath
+                        : asset('images/projects/' . $imagePath);
+                        @endphp
+                        <div class="project-card stagger-item group cursor-pointer" style="background-image: url('{{ $projectImage }}'); background-size: cover; background-position: center;">
                             {{-- Project Card Content --}}
                             <div class="project-card-overlay"></div>
                             <div class="project-card-content">
