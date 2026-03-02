@@ -1,7 +1,7 @@
 @props(['skills'])
 
 {{-- Tech Stack Jar Section --}}
-<section id="tech-stack" class="parallax-section border border-white/25 shadow-lg tech-jar-section mx-4 md:mx-10 rounded-3xl overflow-hidden bg-surface/50 dark:bg-surface/20">
+<section id="tech-stack" class="parallax-section border border-white/25 shadow-lg tech-jar-section mx-4 md:mx-2 rounded-3xl overflow-hidden bg-surface/50 dark:bg-surface/20">
     <div class="parallax-section-content">
         <div class="section-content">
             {{-- Section Header --}}
@@ -18,9 +18,11 @@
                 $categoryColors = [
                 'Frontend' => '#3b82f6',
                 'Backend' => '#22c55e',
-                'Mobile Dev' => '#ffc107',
+                'Mobile & Game Dev' => '#ffc107',
                 'AI & Machine Learning' => '#a855f7',
-                'DevOps & Tools' => '#f97316',
+                'Devops' => '#f97316',
+                'Developer Tools' => '#ec4899',
+                'Marketing & Platforms' => '#14b8a6',
                 ];
                 @endphp
                 @foreach($categoryColors as $cat => $color)

@@ -52,7 +52,11 @@
                         ? $imagePath
                         : asset('images/projects/' . $imagePath);
                         @endphp
-                        <div class="project-card stagger-item group cursor-pointer" style="background-image: url('{{ $projectImage }}'); background-size: cover; background-position: center;">
+                        <a href="{{ $project['link'] ?? '#' }}"
+                            target="{{ ($project['link'] ?? '#') !== '#' ? '_blank' : '_self' }}"
+                            rel="noopener noreferrer"
+                            class="project-card stagger-item group cursor-pointer block"
+                            style="background-image: url('{{ $projectImage }}'); background-size: cover; background-position: center;">
                             {{-- Project Card Content --}}
                             <div class="project-card-overlay"></div>
                             <div class="project-card-content">
@@ -76,7 +80,7 @@
                                 </div>
                                 @endif
                             </div>
-                        </div>
+                        </a>
                         @endforeach
                     </div>
                 </div>

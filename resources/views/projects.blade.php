@@ -45,7 +45,7 @@
 
                     <div class="project-detail-inner">
                         {{-- Header Section --}}
-                        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-10 border-b border-white/5">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 pb-10 border-b border-white/5">
                             <div class="space-y-2">
                                 <h2 class="text-3xl md:text-5xl font-bold text-main tracking-tight group-hover:text-accent transition-colors duration-300">
                                     {{ $project['title'] }}
@@ -60,6 +60,18 @@
                                     @endif
                                 </div>
                             </div>
+
+                            @if(isset($project['link']) && $project['link'] !== '#')
+                            <a href="{{ $project['link'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white font-bold text-sm shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-1 transition-all duration-300">
+                                View Live Project
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                            @endif
                         </div>
 
                         {{-- Content Grid --}}

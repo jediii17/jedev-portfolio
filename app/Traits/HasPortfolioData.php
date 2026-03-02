@@ -11,10 +11,12 @@ trait HasPortfolioData
     {
         return [
             'Frontend' => ['JavaScript', 'Vue 3', 'Inertia.js', 'TypeScript', 'Tailwind CSS', 'Next.js', 'React', 'Framer Motion', 'Alpine.js', 'GSAP', 'Lucide React', 'Vite'],
-            'Backend' => ['Laravel 12', 'PHP', 'Supabase', 'Node.js', 'PostgreSQL', 'SQL Server', 'MySQL', 'Spatie Packages', 'RESTful APIs', 'JWT', 'OAuth'],
-            'Mobile Dev' => ['React Native', 'Expo', 'Zustand', 'React Query', 'Reanimated', 'React Native SVG', 'Expo Audio', 'Google Mobile Ads'],
+            'Backend' => ['Laravel 12', 'PHP', 'Supabase', 'Node.js', 'PostgreSQL', 'SQL Server', 'MySQL', 'Spatie Packages', 'RESTful APIs', 'JWT', 'OAuth', 'Pusher', 'Redis'],
+            'Mobile & Game Dev' => ['React Native', 'Expo', 'Matter.js', 'Zustand', 'React Query', 'Reanimated', 'React Native SVG', 'Expo Audio'],
             'AI & Machine Learning' => ['OpenAI', 'OpenCV', 'Roboflow', 'PyTorch', 'YOLOv8', 'Google Colab'],
-            'DevOps & Tools' => ['Docker', 'Gitlab', 'GitHub', 'Azure Data Studio', 'SourceTree', 'Firebase', 'Google Cloud', 'VS Code'],
+            'Devops' => ['Docker', 'Firebase', 'Google Cloud', 'Vercel', 'Stitch'],
+            'Developer Tools' => ['Gitlab', 'GitHub', 'SourceTree', 'Azure Data Studio', 'Postman', 'VS Code', 'Lucide Icon', 'Material Icon'],
+            'Marketing & Platforms' => ['Google AdSense', 'Google Play Console', 'Google AdMob'],
         ];
     }
 
@@ -31,6 +33,12 @@ trait HasPortfolioData
                 'description' => '',
             ],
             [
+                'role' => 'BS Computer Engineering',
+                'company' => 'University of Perpetual Help System DALTA - Calamba Campus',
+                'period' => '2024',
+                'description' => '',
+            ],
+            [
                 'role' => 'Web Application Developer',
                 'company' => 'NYK-Fil Maritime E-Training, Inc.',
                 'period' => '2024',
@@ -40,12 +48,6 @@ trait HasPortfolioData
                 'role' => 'Freelance Developer',
                 'company' => 'Self-Employed',
                 'period' => '2022 - 2023',
-                'description' => '',
-            ],
-            [
-                'role' => 'BS Computer Engineering',
-                'company' => 'University of Perpetual Help System DALTA - Calamba Campus',
-                'period' => '2024',
                 'description' => '',
             ],
             [
@@ -64,6 +66,34 @@ trait HasPortfolioData
     {
         return [
             [
+                'category' => 'Multiplayer Game',
+                'title' => 'Pusoy Dos Game',
+                'year' => 'Feb 2026',
+                'image' => 'pusoy-dos.png',
+                'description' => 'A real-time multiplayer implementation of the classic Filipino card game. Features a high-performance custom game engine and a mobile-optimized glassmorphism UI.',
+                'tech' => [
+                    'Next.js 16',
+                    'React 19',
+                    'TypeScript',
+                    'Pusher (Real-time)',
+                    'Upstash Redis',
+                    'CSS Grid / Tailwind 4',
+                    'Lucide Icons',
+                    'Vite',
+                    'Github',
+                    'Vercel',
+                ],
+                'link' => 'https://pusoy-dos-game.vercel.app/',
+                'contribution' => [
+                    'Architected a full-stack real-time multiplayer infrastructure using Next.js and Pusher, coupled with serverless Redis for low-latency state persistence.',
+                    'Developed a comprehensive game logic engine from scratch, implementing hierarchical card rules, valid 5-card combinations, and strict turn-based progression.',
+                    'Designed a premium "Glassmorphism" interface, utilizing advanced CSS Grid for a seamless cross-device experience.',
+                    'Implemented a scalable lobby and room management system, supporting unique invite URLs and automated player synchronization upon joining/leaving.',
+                    'Implemented server-side security protocols to mask sensitive opponent hand data, ensuring fair play and preventing client-side exploitation.',
+                    'Streamlined application deployment and monetization through optimized SEO metadata and automated AdSense site verification integration.'
+                ],
+            ],
+            [
                 'category' => 'Mobile Game',
                 'title' => 'MATH Stickman Challenge',
                 'year' => 'Jan 2026 - Present',
@@ -80,6 +110,7 @@ trait HasPortfolioData
                     'Expo Audio',
                     'Google Mobile Ads'
                 ],
+                'link' => '#',
                 'contribution' => [
                     'Built a complex SVG character system with Reanimated, featuring dynamic expressions, body animations, and a procedurally generated seasonal map that changes every 25 levels.',
                     'Created a Dressing Room shop with hundreds of avatar combinations, fully synced with Supabase for persistent storage.',
@@ -97,6 +128,7 @@ trait HasPortfolioData
                 'image' => 'ai-app.png',
                 'description' => 'A dating app backend that uses AI to generate personalized pickup lines and facilitate conversations. Built with Node.js, Express, and Firebase, featuring Google Play subscription integration.',
                 'tech' => ['Node.js', 'Express', 'Firebase', 'OpenAI', 'Google Cloud Pub/Sub', 'Google Play Console', 'Postman', 'Axios', 'RESTful API', 'Middleware'],
+                'link' => '#',
                 'contribution' => [
                     'Created backend server and APIs for the mobile app.',
                     'Integrated OpenAI for AI-driven features.',
@@ -110,6 +142,7 @@ trait HasPortfolioData
                 'image' => 'employee-portal.png',
                 'description' => 'Full system redevelopment migrating a legacy ColdFusion employee portal to Laravel 12. Improved performance, security, and maintainability.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'SQL Server', 'Docker', 'Spatie Multitenancy', 'Gitlab', 'SourceTree', 'Azure Data Studio', 'Dynamic Link Library (DLL)'],
+                'link' => '#',
                 'contribution' => [
                     'Replicated legacy ColdFusion encryption logic for seamless transition.',
                     'Implemented Spatie Laravel Multitenancy for database switching.',
@@ -123,6 +156,7 @@ trait HasPortfolioData
                 'image' => 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070',
                 'description' => 'Transformed a desktop tellering system into a modern web application with a custom CMS using Laravel 12 and Vue 3.',
                 'tech' => ['Laravel 12', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'WebSockets (Reverb)', 'Gitlab', 'SourceTree', 'RESTful API'],
+                'link' => '#',
                 'contribution' => [
                     'Developed the Content Management System (CMS).',
                     'Created a reusable component for the Web Tellering POC project.',
@@ -137,6 +171,7 @@ trait HasPortfolioData
                 'year' => '2025',
                 'description' => 'Web-based system for tracking work orders, time charges, leave management, and manpower allocation across projects.',
                 'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'Gitlab', 'SourceTree'],
+                'link' => '#',
                 'contribution' => [
                     'Designed database schema and implemented Eloquent ORM relationships.',
                     'Developed CRUD functionalities for project modules.',
@@ -149,6 +184,7 @@ trait HasPortfolioData
                 'year' => '2024',
                 'description' => 'Centralized administration system for employee records, user roles, and audit trails to ensure meaningful accountability.',
                 'tech' => ['Laravel 11', 'Inertia.js', 'Vue 3', 'Tailwind CSS', 'MySQL', 'Gitlab', 'SourceTree'],
+                'link' => '#',
                 'contribution' => [
                     'Designed comprehensive database schema and established Eloquent ORM.',
                     'Integrated Spatie packages to implement roles and permissions-based security.',
@@ -161,6 +197,7 @@ trait HasPortfolioData
                 'year' => '2025',
                 'description' => 'IoT-based attendance system using face recognition to automate logging and send SMS/email notifications to guardians.',
                 'tech' => ['Python', 'Tkinter', 'OpenCV', 'SQLite', 'Raspberry Pi', 'GSM Module', 'Gitlab', 'SourceTree'],
+                'link' => '#',
                 'contribution' => [
                     'Designed GUI for attendance logs using Tkinter.',
                     'Enhanced notification system (SMS/Email).',
@@ -172,6 +209,7 @@ trait HasPortfolioData
                 'year' => '2023 - 2024',
                 'description' => 'Award-winning "Best in Thesis" prototype detecting fire via computer vision and earthquakes via seismic sensors.',
                 'tech' => ['Python', 'YOLOv8', 'OpenCV', 'Raspberry Pi', 'Flask', 'Roboflow', 'Github', 'Postman'],
+                'link' => '#',
                 'contribution' => [
                     'Trained YOLOv8 models for fire/smoke detection.',
                     'Developed web dashboard for real-time monitoring and logging.',
@@ -183,6 +221,7 @@ trait HasPortfolioData
                 'year' => '2024',
                 'description' => 'System facilitating efficient transaction management between company and suppliers for Bill of Materials (BOM).',
                 'tech' => ['PHP', 'Laravel', 'Livewire', 'Bootstrap', 'MySQL', 'Github'],
+                'link' => '#',
                 'contribution' => [
                     'Designed overall system UI.',
                     'Implemented supplier dashboard and document uploads.',

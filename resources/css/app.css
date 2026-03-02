@@ -216,7 +216,7 @@ html.lenis, html.lenis body {
     z-index: 10;
     width: 100%;
     max-width: 1400px;
-    padding: 4rem 2rem;
+    padding: 0.5rem 1rem;
 }
 
 /* Parallax background layers */
