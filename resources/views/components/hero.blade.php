@@ -116,7 +116,7 @@
                     </span>
                 </a>
 
-                <a href="{{ asset('assets/resume.pdf') }}" target="_blank" rel="noopener noreferrer"
+                <!-- <a href="{{ asset('assets/resume.pdf') }}" target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/40 transition-all duration-300"
                     data-cursor-hover>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -125,7 +125,7 @@
                         <path d="m7 10 5 5 5-5" />
                     </svg>
                     Resume
-                </a>
+                </a> -->
             </div>
 
             {{-- Core Technologies - Animated Cards --}}
