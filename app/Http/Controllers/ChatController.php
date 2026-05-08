@@ -38,16 +38,19 @@ class ChatController extends Controller
         } catch (\Throwable $e) {
             Log::error('Chatbot error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
 
-            // Log failed attempt if needed, or at least the user message
-            $chatLog = ChatLog::create([
-                'user_message' => $request->message,
-                'ip_address' => $request->ip(),
-            ]);
+            try {
+                // Try to log the failure, but it might fail if the error is DB-related
+                $chatLog = ChatLog::create([
+                    'user_message' => $request->message,
+                    'ip_address' => $request->ip(),
+                ]);
+            } catch (\Throwable $dbError) {
+                Log::error('Could not log chatbot failure to DB: ' . $dbError->getMessage());
+            }
 
             return response()->json([
                 'success' => false,
-                'message' => "I’m likely playing guitar right now!🙈 Try again later. [0101]", //error: 0101 
-                'error' => $e->getMessage(), // Log for debugging if needed
+                'message' => "I’m likely playing guitar right now!🙈 Try again later. [0101]",
                 'chat_id' => $chatLog->id ?? null,
             ], 500);
         }

@@ -66,6 +66,36 @@ trait HasPortfolioData
     {
         return [
             [
+                'category' => 'Mobile Finance App',
+                'title' => 'Savio - Smart Finance Tracker',
+                'year' => 'April 2026 - Present',
+                'image' => 'savio-finance-tracker.png',
+                'description' => 'A comprehensive personal finance management application designed to simplify wealth tracking. Savio provides users with real-time insights into their spending habits, income sources, and savings goals through a sleek, premium interface. The app features automated expense categorization, credit card cycle management, and smart debt tracking, helping users make informed financial decisions.',
+                'tech' => [
+                    'Expo React Native',
+                    'TypeScript',
+                    'Zustand',
+                    'React Native Reanimated',
+                    'Expo Router',
+                    'Google Sign-In',
+                    'React Native SVG',
+                    'Google Mobile Ads',
+                    'Lucide Icons',
+                    'Expo Haptics'
+                ],
+                'link' => 'https://play.google.com/store/apps/details?id=com.savio.financetracker',
+                'contribution' => [
+                    'Architected a robust state management system using Zustand to handle complex financial data across expenses, income, and transfers.',
+                    'Engineered a "Quick Record" system with optimistic UI updates, ensuring instant feedback and smooth transaction logging even on slow networks.',
+                    'Developed a sophisticated credit card management module that tracks billing cycles, cutoffs, and automated settlement reminders.',
+                    'Integrated secure authentication via Google Sign-In and implemented biometric privacy locks using Expo Local Authentication.',
+                    'Optimized application performance by refactoring heavy data synchronization cycles, reducing latency from 8 seconds to near-instantaneous.',
+                    'Designed and implemented interactive savings goal visualizations with detailed contribution history and progress tracking.',
+                    'Managed complex bidirectional data synchronization between "Money Owed" and "Planned Payments" to maintain high data integrity.',
+                    'Integrated non-intrusive AdMob banner and native ads to monetize the platform while maintaining a premium, high-end aesthetic.'
+                ]
+            ],
+            [
                 'category' => 'Multiplayer Game',
                 'title' => 'Pusoy Dos Game',
                 'year' => 'Feb 2026',
