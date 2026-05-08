@@ -98,7 +98,7 @@ trait HasPortfolioData
                 'title' => 'MATH Stickman Challenge',
                 'year' => 'Jan 2026 - Present',
                 'image' => 'math-challenge.png',
-                'description' => 'An educational mobile game designed to help young learners practice basic math skills such as addition, subtraction, multiplication, division and fractions. The game uses a visual feedback system where a stickman character loses body parts after incorrect answers, encouraging students to answer carefully. Currently under development and not yet publish in Google Play Store.',
+                'description' => 'An educational mobile game designed to help young learners practice basic math skills such as addition, subtraction, multiplication, division and fractions. The game uses a visual feedback system where a stickman character loses body parts after incorrect answers, encouraging students to answer carefully. This project is already available for download on Google Play Store.',
                 'tech' => [
                     'Expo React Native',
                     'TypeScript',
@@ -110,7 +110,7 @@ trait HasPortfolioData
                     'Expo Audio',
                     'Google Mobile Ads'
                 ],
-                'link' => '#',
+                'link' => 'https://play.google.com/store/apps/details?id=com.kairomathstickman.challenge',
                 'contribution' => [
                     'Built a complex SVG character system with Reanimated, featuring dynamic expressions, body animations, and a procedurally generated seasonal map that changes every 25 levels.',
                     'Created a Dressing Room shop with hundreds of avatar combinations, fully synced with Supabase for persistent storage.',
