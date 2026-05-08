@@ -79,6 +79,15 @@
                                     @endforeach
                                 </div>
                                 @endif
+
+                                {{-- Visible CTA --}}
+                                @if(isset($project['link']) && $project['link'] !== '#')
+                                <div class="mt-6 flex items-center gap-2 text-xs font-bold text-accent group-hover:text-white transition-colors">
+                                    <span class="px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                                        {{ Str::contains($project['link'], 'play.google.com') ? 'View on Play Store' : 'View App Project' }}
+                                    </span>
+                                </div>
+                                @endif
                             </div>
                         </a>
                         @endforeach

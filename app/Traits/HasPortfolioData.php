@@ -122,13 +122,13 @@ trait HasPortfolioData
                 ]
             ],
             [
-                'category' => 'Mobile App',
+                'category' => 'Mobile Dating App',
                 'title' => 'AI Assistance Mobile App (Backend Server)',
                 'year' => 'Dec 2025 - Jan 2026',
                 'image' => 'ai-app.png',
                 'description' => 'A dating app backend that uses AI to generate personalized pickup lines and facilitate conversations. Built with Node.js, Express, and Firebase, featuring Google Play subscription integration.',
                 'tech' => ['Node.js', 'Express', 'Firebase', 'OpenAI', 'Google Cloud Pub/Sub', 'Google Play Console', 'Postman', 'Axios', 'RESTful API', 'Middleware'],
-                'link' => '#',
+                'link' => 'https://play.google.com/store/apps/details?id=com.el.coqueto',
                 'contribution' => [
                     'Created backend server and APIs for the mobile app.',
                     'Integrated OpenAI for AI-driven features.',
