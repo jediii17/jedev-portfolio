@@ -18,11 +18,11 @@
         <div class="col-half bg-surface overflow-hidden">
             <div class="col-image-wrap">
                 @php
-                    $latestProject = $projects[0];
-                    $imagePath = $latestProject['image'] ?? 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070';
-                    $projectImage = Str::startsWith($imagePath, ['http://', 'https://'])
-                        ? $imagePath
-                        : asset('images/projects/' . $imagePath);
+                $latestProject = $projects[0];
+                $imagePath = $latestProject['image'] ?? 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070';
+                $projectImage = Str::startsWith($imagePath, ['http://', 'https://'])
+                ? $imagePath
+                : asset('images/projects/' . $imagePath);
                 @endphp
                 <img src="{{ $projectImage }}"
                     alt="{{ $latestProject['title'] }}"
