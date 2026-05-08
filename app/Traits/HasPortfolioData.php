@@ -67,8 +67,8 @@ trait HasPortfolioData
         return [
             [
                 'category' => 'Mobile Finance App',
-                'title' => 'Savio - Smart Finance Tracker',
-                'year' => 'April 2026 - Present',
+                'title' => 'Savio - Finance Tracker',
+                'year' => 'March 2026 - Present',
                 'image' => 'savio-finance-tracker.png',
                 'description' => 'A comprehensive personal finance management application designed to simplify wealth tracking. Savio provides users with real-time insights into their spending habits, income sources, and savings goals through a sleek, premium interface. The app features automated expense categorization, credit card cycle management, and smart debt tracking, helping users make informed financial decisions.',
                 'tech' => [
